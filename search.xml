@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>second-post</title>
+    <url>/2025/01/05/second-post/</url>
+    <content><![CDATA[<!-- 代碼塊 -->
+<h5 class="ms-2 my-0">初始化hexo</h5>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">console.log(&quot;Hello, World!&quot;);</span><br></pre></td></tr></table></figure></div>
+
+<h1>融入團隊</h1>
+<p>有一位夥伴，個人很優秀，但在團隊裏經常看不到他，每次公司活動都很少看到他的影子。幾星期過後，老闆和同事决定去探訪他。
+
+<p>在一個寒冷的冬天，老闆和同事敲開他的門，只有他一個人在家裏，坐在火爐旁。</p>
+<p>他也猜到老闆來探訪的目的，一定是請他參與會議。但他心裏却想：「成功是我個人的事，何必一定要去按照別人的方式方法去做呢？」</p>
+<p>出於禮貌，他請老闆和同事進來，坐在爐火旁的椅子上，等待老闆說明來意。但老闆坐下後，並沒有說什麽。</p>
+<p>在一片死寂的安靜中，他們只是注視著火爐中的炭火，那火焰正燃燒著木塊，發出啪啪的聲音。</p>
+<p>幾分鐘過後，老闆拿起夾炭火的鉗子，小心翼翼地撿了一塊燒得通紅的木頭，夾到旁邊擱著。然後回到他的座位上，繼續沉默著。這個朋友也安靜地看著這一幕。</p>
+<p>過不久，那塊燒紅炙亮的炭火閃過它最後一道光芒，很快就熄滅了，不再紅也不再亮。</p>
+<p>冷却後的炭火靜靜地躺在那冰冷的地上，看起來像是一塊死寂的黑木炭。</p>
+<p>老闆仍然沒有說話。不久，老闆起身，撿起這塊熄滅的木炭，把它再放回烈火當中。立刻，這塊黑木炭又開始燃燒起來，跟著旁邊一堆燒得正炙的炭火，一起發出熊熊的火焰。</p>
+<p>老闆說：「回來，跟我們一起燃燒吧！」</p>
+<p>這個人一下子明白了說：「感謝！我立刻融入團隊中去。」</p>
+<p>團隊就是思想同心、目標同向、行動力同步、執行力到位、嚴格複製、互相幫補扶持。</p>
+<p>今天是團隊合作的時代，衆人燒柴火焰高。再優秀的人離開群體是無法生存的，因爲生命需要相互激勵，方能迸出火花。自掃門前雪的人，常常落入自私並感到孤單！</p>
+<p>離開團隊，可能你什麽也不是了！一雙筷子一折就斷，一把筷子就有了力量了。</p>
+<p>今天是抱團合作的時代，唯有放下自我，找對平臺，融入團隊，才能一起共贏！</p></p>
+]]></content>
+      <categories>
+        <category>心情分享</category>
+      </categories>
+      <tags>
+        <tag>文章</tag>
+        <tag>測試</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexoc環境建置、指令教學</title>
+    <url>/2025/01/08/post1/</url>
+    <content><![CDATA[<h3>1.安裝hexo</h3>
+<ul>前置環境
+    <li>先安裝Node.js</li>
+    <li>先安裝Git</li>
+</ul>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://imgur.com/3162t1b"
+                      alt="hexo.jpg"
+                > 
+<p>打開cmd，輸入下面指令(使用shell須加上"$")</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-cli -g</span><br></pre></td></tr></table></figure></div>
+]]></content>
+      <categories>
+        <category>教學</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+</search>
