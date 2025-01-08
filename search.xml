@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>hexoc環境建置、指令教學</title>
+    <url>/2025/01/08/post1/</url>
+    <content><![CDATA[<h3>1.安裝hexo</h3>
+<ul>前置環境
+    <li>先安裝Node.js</li>
+    <li>先安裝Git</li>
+</ul>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://i.imgur.com/g9Ucf4d.png"
+                      class="px-3" alt="hexo.jpg"
+                > 
+<p>打開cmd，輸入下面指令(使用shell須加上"$")</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-cli -g</span><br></pre></td></tr></table></figure></div>
+]]></content>
+      <categories>
+        <category>教學</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>second-post</title>
     <url>/2025/01/05/second-post/</url>
     <content><![CDATA[<!-- 代碼塊 -->
@@ -31,30 +55,6 @@
       <tags>
         <tag>文章</tag>
         <tag>測試</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexoc環境建置、指令教學</title>
-    <url>/2025/01/08/post1/</url>
-    <content><![CDATA[<h3>1.安裝hexo</h3>
-<ul>前置環境
-    <li>先安裝Node.js</li>
-    <li>先安裝Git</li>
-</ul>
-<img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://imgur.com/3162t1b"
-                      alt="hexo.jpg"
-                > 
-<p>打開cmd，輸入下面指令(使用shell須加上"$")</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-cli -g</span><br></pre></td></tr></table></figure></div>
-]]></content>
-      <categories>
-        <category>教學</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
       </tags>
   </entry>
 </search>
