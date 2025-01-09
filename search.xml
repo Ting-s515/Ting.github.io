@@ -1,21 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>hexoc環境建置、指令教學</title>
+    <title>Hexo環境建置、指令紀錄</title>
     <url>/2025/01/08/post1/</url>
-    <content><![CDATA[<h3>1.安裝hexo</h3>
-<ul>前置環境
+    <content><![CDATA[<style>
+    li{margin-left:30px !important;max-width:800px;font-size:18px;}
+    hr{ width: 100%;
+        border-style: solid;
+        border-color: gray;
+        border-width: 2px;
+        margin:15px 0px !important;}
+</style>
+<!-- ------------------------------------------------------------------------------------- -->
+<h3 id="install_hexo">1. 安裝Hexo</h3>
+<ul class="mb-0">前置作業
     <li>先安裝Node.js</li>
     <li>先安裝Git</li>
 </ul>
+<p class="mt-0">下載完之後，可在cmd分別下node-v 、 git -v檢查</p>
 <img  
                      lazyload
                      src="/images/loading.svg"
                      data-src="https://i.imgur.com/g9Ucf4d.png"
-                      class="px-3" alt="hexo.jpg"
+                      class="" alt="hexo.jpg"
                 > 
-<p>打開cmd，輸入下面指令(使用shell須加上"$")</p>
+<p>打開cmd，輸入下面指令(shell須加上"$")</p>
 <div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-cli -g</span><br></pre></td></tr></table></figure></div>
+
+<p class="">-g （Global Installation）全域安裝</p>
+<p class="">下載完之後，可在cmd下hexo -v檢查</p>
+<!-- ------------------------------------------------------------------------------------- -->
+<h3 id="initialize_hexo">2. 初始化Hexo</h3>
+<ul>有兩個做法
+    <li>直接輸入下面指令，會自動於所在目錄建立一個新資料夾以操作 Hexo。</li>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ hexo init &lt;資料夾名稱&gt;</span><br></pre></td></tr></table></figure></div>
+
+<li>也可以先建立好資料夾，再切換到該資料夾，同樣能進行初始化</li>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ cd &lt;資料夾路徑&gt;</span><br></pre></td></tr></table></figure></div>
+
+</ul>
+<!-- ------------------------------------------------------------------------------------- -->
+<h3 id="folder_install_files">3. Hexo檔案說明</h3>
+<p>確認路徑在專案資料夾中</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ npm install</span><br></pre></td></tr></table></figure></div>
+
+<p>完成後可看到以下檔案</p>
+<h4>_config.yml</h4>
+<ul>
+    <li>有關網站配置的檔案，可修改各種配置設定。例如：網站標題、網站的網址、使用主題名稱等</li>
+</ul>
+<h4>scaffolds</h4>
+<ul>
+    <li>當我們建立新文章時，Hexo 會根據 scaffolds 中的模板建立相對應的檔案</li>
+    <li>post、page 和 draft，分別對應：要發布的文章、頁面、草稿</li>
+</ul>
+<h4>themes</h4>
+<ul>
+    <li>用來存放主題的資料夾</li>
+    <li>Hexo 會根據主題來解析 scouce 資料夾中的檔案並產生靜態頁面。預設主題為 landscape</li>
+</ul>
+<h4>source</h4>
+<ul>
+    <li class="">通常資料夾命名開頭會加上底線 _，例如 _imgs</li>
+    <li>以 _ 開頭的檔案、資料夾或隱藏檔案會被忽略，除了 _posts 資料夾以外</li>
+    <li>Markdown 檔和 HTML 檔會被解析，並放到 public 資料夾，而其他檔案則會被拷貝過去</li>
+</ul>
+<h4>source & public & .deploy_git</h4>
+<ul>
+    <li>執行 $ hexo generate 之後，會將 scorce 文件夾中的 Markdown 檔和 HTML 檔進行解析，再結合主題進行渲染，生成靜態網站</li>
+    <li>執行 $ hexo deploy 之後，則會將 public 文件夾中的內容部署到 GitHub，並生成 .deploy_git 資料夾，因此內容與 public 幾乎相同</li>
+    <li>關係箭頭圖: </li>
+
+
+  <div class="note p-4 mb-4 rounded-small default">
+    <p>source -&gt; public -&gt; .deploy_git</p>
+
+  </div>
+
+</ul>
+<!-- ------------------------------------------------------------------------------------- -->
+<h3 id="common_instructions">4. 常用指令</h3>
+<hr>
+<h4>new 新增文章</h4>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ hexo new 檔名</span><br></pre></td></tr></table></figure></div>
+
+<h4>clean 清除靜態檔案與快取</h4>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ hexo clean</span><br></pre></td></tr></table></figure></div>
+
+<h4>generate 產生靜態檔案</h4>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure></div>
+
+<h4>server 啟動伺服器</h4>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure></div>
+
+<!-- ------------------------------------------------------------------------------------- -->
+<h3 id="push_github">5. 部屬到GitHub</h3>
+<p>將專案名稱命名為 username.github.io，username 記得改成自己的帳號名稱</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/githubRepoName.png"
+                     
+                >
+<h4>1. 安裝 Git 相關套件</h4>
+<p>回到 hexo 資料夾，在終端機輸入下列指令：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure></div>
+
+<h4>2. 修改 _config.yml 檔案的 Deployment 設定</h4>
+<p>需注意這裡指的 _config.yml 檔案是根目錄的，而不是 themes 主題中的。</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: </span><br><span class="line">  branch: </span><br></pre></td></tr></table></figure></div>
+<ul>
+    <li>type：選擇部屬模式，這裡填 git</li>
+    <li>repo：GitHub repository 的連結，記得將 username 修改成自己的帳號名稱</li>
+    <li>branch：選擇分支，預設為 master</li>
+</ul>
+<p>修改完成後，建議執行以下程式</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ hexo cl    // 清除之前建立的靜態檔案</span><br><span class="line">$ hexo g     // 建立靜態頁面</span><br><span class="line">$ hexo d     // 部署至 GitHub</span><br></pre></td></tr></table></figure></div>
+
+<p>可合併第二、三行指令：hexo g -d 即可在產生靜態頁面後立刻部署。</p>
+
+<h4>疑難排解</h4>
+<strong>如果你之前有部屬過了，再次deploy到github打開網頁，發現還是舊的</strong>
+
+  <div class="note-large default">
+    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
+      <p>請按下</p>
+
+    </div>
+    <div class="notel-content">
+      <p>ctrl + shift + r</p>
+
+    </div>
+  </div>
+
+<p>因為google為了加快網頁載入速度，會自動快取js、css，需要刷新快取</p>
+<!-- ------------------------------------------------------------------------------------- -->
+<h3 id="description_notes">※ 使用外部套件注意事項</h3>
+<p>如果跟我一樣想快速調整版面，引入BootStrap套件，需要注意會有跟主題衝突的風險，
+因此建議只引入必要性的BS</p>
+
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap-utilities.min.css&quot;</span><br></pre></td></tr></table></figure></div>
+
+<h4>bootstrap-utilities.min.css 包含以下內容：</h4>
+<ul><strong>1. 間距工具（Margin & Padding）</strong>
+    <li>類似 m-0, p-2, mt-3, mx-1 等。</li>
+    <li>支援方向（如 t, b, l, r, x, y）和數值（如 0, 1, 2, 等）。</li>
+</ul>
+<ul><strong>2. 顯示工具（Display Utilities）</strong>
+    <li>如 d-none, d-flex, d-inline 等，控制元素顯示方式。</li>
+</ul>
+<ul><strong>3. 定位工具（Position Utilities）</strong>
+    <li>如 position-relative, position-absolute 等。</li>
+</ul>
+<ul><strong>4. 其他小工具類</strong>
+    <li>如 text-center, text-start。</li>
+    <li>還有 overflow-auto, overflow-hidden。</li>
+</ul>
+p.s.
+<p class="" style="">我自己就是遇到文章的(toc)目錄的滾動動畫有問題，才知道有這個問題，為此我還特別去找redefine全部有關
+toc.js與scroll監聽事件都改了一遍，還是不起作用....，做到一半放棄了去吃飯，突然靈光一閃想到bootstrap，還真的被我找到問題了.....</p>
+<p><strong>"當想不到辦法時，就站起來走走或是過幾天再回來解這邊，就突然解開了耶~"</strong> ，這句話真的有用!!</p>
 ]]></content>
       <categories>
         <category>教學</category>
@@ -28,7 +172,7 @@
     <title>second-post</title>
     <url>/2025/01/05/second-post/</url>
     <content><![CDATA[<!-- 代碼塊 -->
-<h5 class="ms-2 my-0">初始化hexo</h5>
+<h5 class="">初始化hexo</h5>
 <div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">console.log(&quot;Hello, World!&quot;);</span><br></pre></td></tr></table></figure></div>
 
 <h1>融入團隊</h1>
