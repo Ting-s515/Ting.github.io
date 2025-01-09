@@ -119,8 +119,8 @@
 
 <p>可合併第二、三行指令：hexo g -d 即可在產生靜態頁面後立刻部署。</p>
 
-<h4>疑難排解</h4>
-<strong>如果你之前有部屬過了，再次deploy到github打開網頁，發現還是舊的</strong>
+<h3 id="no_refresh">怎麼沒有刷新?</h3>
+<strong>如果你之前有部屬過了，再次deploy到github打開網頁，發現還是舊的畫面</strong>
 
   <div class="note-large default">
     <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
