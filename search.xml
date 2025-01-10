@@ -1,10 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>整理有關哈希密碼與ILogger相關程式</title>
+    <url>/2025/01/10/HashPassword/</url>
+    <content><![CDATA[<h2 id="create_obj">先建立PasswordHasher物件</h2>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">private readonly PasswordHasher&lt;memberTable&gt; _passwordHasher;</span><br><span class="line">private readonly ILogger&lt;RegisterAndLoginController&gt; _logger;</span><br><span class="line">//注入控制器</span><br><span class="line">public RegisterAndLoginController(CitybreakContext context, ILogger&lt;當前的Controller&gt; logger)</span><br><span class="line">&#123;</span><br><span class="line">	_context = context;</span><br><span class="line">	_passwordHasher = new PasswordHasher&lt;memberTable&gt;();</span><br><span class="line">	_logger = logger;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h2 id="register">註冊</h2>
+<p>語法說明</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">memberData.password = _passwordHasher.HashPassword(memberTable user, string password);</span><br></pre></td></tr></table></figure></div>
+<ul>
+    <li>memberData.password: 自訂資料表物件.欄位</li>
+    <li>_passwordHasher: 物件</li>
+    <li>.HashPassword: 方法名稱，負責加密</li>
+    <li>第一個參數: 傳入資料表物件，比如根據用戶的某些屬性進一步自定義加密邏輯。在這邊可以使用null
+    ，表示直接對傳入的密碼進行加密</li>
+    <li>第二個參數: 需要加密的字串</li>
+</ul>
+
+<h2 id="login">登入</h2>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">//比對密碼</span><br><span class="line">PasswordVerificationResult result = _passwordHasher.VerifyHashedPassword</span><br><span class="line">        (member, member.password, value.password);</span><br><span class="line">//接受三個參數：用戶實體、存儲的哈希密碼和用戶輸入的密碼</span><br><span class="line">if (result == PasswordVerificationResult.Success)</span><br></pre></td></tr></table></figure></div>
+<h4>PasswordVerificationResult</h4>
+<ul>這是 Microsoft.AspNetCore.Identity 提供的一個型別，表示密碼驗證的結果
+    <li>Success：驗證成功，密碼正確。</li>
+    <li>Failed：驗證失敗，密碼不正確。</li>
+    <li>SuccessRehashNeeded：密碼驗證成功，但需要重新哈希密碼（例如，哈希算法升級或安全策略改變）。</li>
+</ul>
+
+<h4>VerifyHashedPassword</h4>
+<ul>主要是比對已儲存的哈希密碼與用戶輸入的原始密碼。
+    <li>memberTable user: 用戶物件</li>
+    <li>hashedPassword: 資料庫中儲存的經過哈希的密碼。</li>
+    <li>providedPassword: 用戶輸入的密碼</li>
+</ul>
+
+]]></content>
+      <categories>
+        <category>整理記錄</category>
+      </categories>
+      <tags>
+        <tag>hash</tag>
+        <tag>.Net</tag>
+        <tag>ILogger</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo環境建置、指令紀錄</title>
-    <url>/2025/01/08/post1/</url>
+    <url>/2025/01/08/HexoDescription/</url>
     <content><![CDATA[<style>
-    /* li{margin-left:30px !important;max-width:800px;font-size:18px;} */
     hr{ width: 100%;
         border-style: solid;
         border-color: gray;
@@ -14,6 +56,7 @@
        
 </style>
 <!-- ------------------------------------------------------------------------------------- -->
+<hr>
 <h3 id="install_hexo">1. 安裝Hexo</h3>
 <ul class="mb-0">前置作業
     <li class="ms-5">先安裝Node.js</li>
@@ -26,76 +69,76 @@
                      data-src="https://i.imgur.com/g9Ucf4d.png"
                       class="" alt="hexo.jpg"
                 > 
-<p>打開cmd，輸入下面指令(shell須加上"$")</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-cli -g</span><br></pre></td></tr></table></figure></div>
+<p>打開cmd，輸入下面指令</p>
 
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br></pre></td></tr></table></figure></div>
 <p class="">-g （Global Installation）全域安裝</p>
 <p class="">下載完之後，可在cmd下hexo -v檢查</p>
 <!-- ------------------------------------------------------------------------------------- -->
+<hr>
 <h3 id="initialize_hexo">2. 初始化Hexo</h3>
 <ul>有兩個做法
     <li class="ms-5">直接輸入下面指令，會自動於所在目錄建立一個新資料夾以操作 Hexo。</li>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ hexo init &lt;資料夾名稱&gt;</span><br></pre></td></tr></table></figure></div>
+    <div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init &lt;資料夾名稱&gt;</span><br></pre></td></tr></table></figure></div>
+    <li class="ms-5">也可以先建立好資料夾，再切換到該資料夾，同樣能進行初始化</li>
 
-<li class="ms-5">也可以先建立好資料夾，再切換到該資料夾，同樣能進行初始化</li>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ cd &lt;資料夾路徑&gt;</span><br></pre></td></tr></table></figure></div>
-
+<pre><code><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd &lt;資料夾路徑&gt;</span><br></pre></td></tr></table></figure></div>
+</code></pre>
 </ul>
 <!-- ------------------------------------------------------------------------------------- -->
+<hr>
 <h3 id="folder_install_files">3. Hexo檔案說明</h3>
 <p>確認路徑在專案資料夾中</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ npm install</span><br></pre></td></tr></table></figure></div>
-
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure></div>
 <p>完成後可看到以下檔案</p>
-<h4>_config.yml</h4>
+<h4 id="_config.yml">_config.yml</h4>
 <ul>
     <li class="ms-5">有關網站配置的檔案，可修改各種配置設定。例如：網站標題、網站的網址、使用主題名稱等</li>
 </ul>
-<h4>scaffolds</h4>
+<h4 id="scaffolds">scaffolds</h4>
 <ul>
     <li class="ms-5">當我們建立新文章時，Hexo 會根據 scaffolds 中的模板建立相對應的檔案</li>
     <li class="ms-5">post、page 和 draft，分別對應：要發布的文章、頁面、草稿</li>
 </ul>
-<h4>themes</h4>
+<h4 id="themes">themes</h4>
 <ul>
     <li class="ms-5">用來存放主題的資料夾</li>
     <li class="ms-5">Hexo 會根據主題來解析 scouce 資料夾中的檔案並產生靜態頁面。預設主題為 landscape</li>
 </ul>
-<h4>source</h4>
+<h4 id="source">source</h4>
 <ul>
     <li class="ms-5">通常資料夾命名開頭會加上底線 _，例如 _imgs</li>
     <li class="ms-5">以 _ 開頭的檔案、資料夾或隱藏檔案會被忽略，除了 _posts 資料夾以外</li>
     <li class="ms-5">Markdown 檔和 HTML 檔會被解析，並放到 public 資料夾，而其他檔案則會被拷貝過去</li>
 </ul>
-<h4>source & public & .deploy_git</h4>
+<h4 id="source_public_deploy_git">source & public & .deploy_git</h4>
 <ul>
-    <li class="ms-5">執行 $ hexo generate 之後，會將 scorce 文件夾中的 Markdown 檔和 HTML 檔進行解析，再結合主題進行渲染，生成靜態網站</li>
-    <li class="ms-5">執行 $ hexo deploy 之後，則會將 public 文件夾中的內容部署到 GitHub，並生成 .deploy_git 資料夾，因此內容與 public 幾乎相同</li>
+    <li class="ms-5">執行 hexo generate 之後，會將 scorce 文件夾中的 Markdown 檔和 HTML 檔進行解析，再結合主題進行渲染，生成靜態網站</li>
+    <li class="ms-5">執行 hexo deploy 之後，則會將 public 文件夾中的內容部署到 GitHub，並生成 .deploy_git 資料夾，因此內容與 public 幾乎相同</li>
     <li class="ms-5">關係箭頭圖: </li>
-
 
   <div class="note p-4 mb-4 rounded-small default">
     <p>source -&gt; public -&gt; .deploy_git</p>
 
   </div>
-
 </ul>
 <!-- ------------------------------------------------------------------------------------- -->
-<h3 id="common_instructions">4. 常用指令</h3>
 <hr>
-<h4>new 新增文章</h4>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ hexo new 檔名</span><br></pre></td></tr></table></figure></div>
+<h3 id="common_instructions">4. 常用指令</h3>
 
-<h4>clean 清除靜態檔案與快取</h4>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ hexo clean</span><br></pre></td></tr></table></figure></div>
+<h4 id="new_article">new 新增文章</h4>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new 檔名</span><br></pre></td></tr></table></figure></div>
+<h4 id="clean_file_cache">clean 清除靜態檔案與快取</h4>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure></div>
 
-<h4>generate 產生靜態檔案</h4>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure></div>
+<h4 id="generate_static_file">generate 產生靜態檔案</h4>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure></div>
 
-<h4>server 啟動伺服器</h4>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure></div>
+<h4 id="run_server">server 啟動伺服器</h4>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure></div>
 
 <!-- ------------------------------------------------------------------------------------- -->
+<hr>
 <h3 id="push_github">5. 部屬到GitHub</h3>
 <p>將專案名稱命名為 username.github.io，username 記得改成自己的帳號名稱</p>
 <img  
@@ -104,11 +147,11 @@
                      data-src="/images/githubRepoName.png"
                      
                 >
-<h4>1. 安裝 Git 相關套件</h4>
+<h4 id="install_git">1. 安裝 Git 相關套件</h4>
 <p>回到 hexo 資料夾，在終端機輸入下列指令：</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure></div>
 
-<h4>2. 修改 _config.yml 檔案的 Deployment 設定</h4>
+<h4 id="edit__config.yml">2. 修改 _config.yml 檔案的 Deployment 設定</h4>
 <p>需注意這裡指的 _config.yml 檔案是根目錄的，而不是 themes 主題中的。</p>
 <div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: </span><br><span class="line">  branch: </span><br></pre></td></tr></table></figure></div>
 <ul>
@@ -117,11 +160,10 @@
     <li class="ms-5">branch：選擇分支，預設為 master</li>
 </ul>
 <p>修改完成後，建議執行以下程式</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ hexo cl    // 清除之前建立的靜態檔案</span><br><span class="line">$ hexo g     // 建立靜態頁面</span><br><span class="line">$ hexo d     // 部署至 GitHub</span><br></pre></td></tr></table></figure></div>
-
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo cl    // 清除之前建立的靜態檔案</span><br><span class="line">hexo g     // 建立靜態頁面</span><br><span class="line">hexo d     // 部署至 GitHub</span><br></pre></td></tr></table></figure></div>
 <p>可合併第二、三行指令：hexo g -d 即可在產生靜態頁面後立刻部署。</p>
 
-<h3 id="no_refresh">怎麼沒有刷新?</h3>
+<h4 id="no_refresh">3. 怎麼沒有刷新?</h4>
 <strong>如果你之前有部屬過了，再次deploy到github打開網頁，發現還是舊的畫面</strong>
 
   <div class="note-large default">
@@ -137,13 +179,14 @@
 
 <p>因為google為了加快網頁載入速度，會自動快取js、css，需要刷新快取</p>
 <!-- ------------------------------------------------------------------------------------- -->
+<hr>
 <h3 id="description_notes">※ 使用外部套件注意事項</h3>
 <p>如果跟我一樣想快速調整版面，引入BootStrap套件，需要注意會有跟主題衝突的風險，
 因此建議只引入必要性的套件</p>
 
 <div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap-utilities.min.css&quot;</span><br></pre></td></tr></table></figure></div>
 
-<h4>bootstrap-utilities.min.css 包含以下內容：</h4>
+<h4 id="bootstrap">bootstrap-utilities.min.css 包含以下內容：</h4>
 <ul><strong>1. 間距工具（Margin & Padding）</strong>
     <li class="ms-5">類似 m-0, p-2, mt-3, mx-1 等。</li>
     <li class="ms-5">支援方向（如 t, b, l, r, x, y）和數值（如 0, 1, 2, 等）。</li>
@@ -168,40 +211,345 @@ toc.js與scroll監聽事件都改了一遍，還是不起作用....，做到一�
       </categories>
       <tags>
         <tag>hexo</tag>
-        <tag>紀錄</tag>
+        <tag>踩坑</tag>
       </tags>
   </entry>
   <entry>
-    <title>second-post</title>
-    <url>/2025/01/05/second-post/</url>
-    <content><![CDATA[<!-- 代碼塊 -->
-<h5 class="">初始化hexo</h5>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">console.log(&quot;Hello, World!&quot;);</span><br></pre></td></tr></table></figure></div>
+    <title>.Net資料庫連接db</title>
+    <url>/2025/01/10/NetConnectDB/</url>
+    <content><![CDATA[<h2 id="install_package">1. 安裝套件</h2>
+<strong>必要項</strong>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">Microsoft.EntityFrameworkCore.SqlServer</span><br><span class="line">Microsoft.EntityFrameworkCore.Tools</span><br></pre></td></tr></table></figure></div>
+<strong>非必要項</strong>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">Microsoft.AspNetCore.Mvc.NewtonsoftJson (解析JSON)</span><br><span class="line">AutoMapper(自動映射DTO資料型態)</span><br><span class="line">Microsoft.AspNetCore.Authentication.Google </span><br><span class="line">SixLabors.ImageSharp(提取Images格式)</span><br></pre></td></tr></table></figure></div>
+<!-- ------------------------------------------------------------------------------------- -->
+<h2 id="connect_db">2. 連接資料庫字串</h2>
+<p>到套件管理器主控台(檢視>其他視窗>套件管理器主控台)</p>
 
-<h1>融入團隊</h1>
-<p>有一位夥伴，個人很優秀，但在團隊裏經常看不到他，每次公司活動都很少看到他的影子。幾星期過後，老闆和同事决定去探訪他。
+<h3 id="local_certification">本地認證</h3>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">Scaffold-DbContext &quot;Server=.\SQLExpress; Database=TestProject; Integrated Security=True; TrustServerCertificate=true&quot; Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -NoOnConfiguring -UseDatabaseNames -NoPluralize -Force </span><br></pre></td></tr></table></figure></div>
+<!-- ------------------------------------------------------------------------------------- -->
+<h3 id="sql_certification">SQL認證</h3>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">Scaffold-DbContext &quot;Server=34.81.75.116;Database=Zugether;User ID=sqlserver;</span><br><span class="line">Password=qwe321;TrustServerCertificate=true&quot; Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -NoOnConfiguring -UseDatabaseNames -NoPluralize -Force</span><br></pre></td></tr></table></figure></div>
+<ul>說明參數
+    <li>Integrated Security=True: 使用 Windows 認證來連接資料庫 。</li>
+    <li>TrustServerCertificate=true: 表示允許接受未經驗證的 SSL 憑證。</li>
+    <li>Microsoft.EntityFrameworkCore.SqlServer: 生成適用於 SQL Server 的代碼。 </li>
+    <li>-OutputDir Models: 存放到名為 Models 的資料夾中。</li>
+    <li>-NoOnConfiguring: 不要生成 OnConfiguring 代碼 。</li>
+    <li>-UseDatabaseNames: 在生成類別和屬性名稱時，使用資料庫中的名稱 </li>
+    <li>-NoPluralize: 不要對生成的類別名稱進行複數化處理 +s。</li>
+    <li>-Force: 強制覆寫現有的模型。如果已經生成過模型類別，這個選項會強制覆蓋這些檔案。</li>
+</ul>
 
-<p>在一個寒冷的冬天，老闆和同事敲開他的門，只有他一個人在家裏，坐在火爐旁。</p>
-<p>他也猜到老闆來探訪的目的，一定是請他參與會議。但他心裏却想：「成功是我個人的事，何必一定要去按照別人的方式方法去做呢？」</p>
-<p>出於禮貌，他請老闆和同事進來，坐在爐火旁的椅子上，等待老闆說明來意。但老闆坐下後，並沒有說什麽。</p>
-<p>在一片死寂的安靜中，他們只是注視著火爐中的炭火，那火焰正燃燒著木塊，發出啪啪的聲音。</p>
-<p>幾分鐘過後，老闆拿起夾炭火的鉗子，小心翼翼地撿了一塊燒得通紅的木頭，夾到旁邊擱著。然後回到他的座位上，繼續沉默著。這個朋友也安靜地看著這一幕。</p>
-<p>過不久，那塊燒紅炙亮的炭火閃過它最後一道光芒，很快就熄滅了，不再紅也不再亮。</p>
-<p>冷却後的炭火靜靜地躺在那冰冷的地上，看起來像是一塊死寂的黑木炭。</p>
-<p>老闆仍然沒有說話。不久，老闆起身，撿起這塊熄滅的木炭，把它再放回烈火當中。立刻，這塊黑木炭又開始燃燒起來，跟著旁邊一堆燒得正炙的炭火，一起發出熊熊的火焰。</p>
-<p>老闆說：「回來，跟我們一起燃燒吧！」</p>
-<p>這個人一下子明白了說：「感謝！我立刻融入團隊中去。」</p>
-<p>團隊就是思想同心、目標同向、行動力同步、執行力到位、嚴格複製、互相幫補扶持。</p>
-<p>今天是團隊合作的時代，衆人燒柴火焰高。再優秀的人離開群體是無法生存的，因爲生命需要相互激勵，方能迸出火花。自掃門前雪的人，常常落入自私並感到孤單！</p>
-<p>離開團隊，可能你什麽也不是了！一雙筷子一折就斷，一把筷子就有了力量了。</p>
-<p>今天是抱團合作的時代，唯有放下自我，找對平臺，融入團隊，才能一起共贏！</p></p>
-]]></content>
+<h3 id="di">Program.cs中加入資料庫物件的注入。</h3>
+<p>在var app = builder.Build(); 之前</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">builder.Services.AddDbContext&lt;WebContext&gt;(options =&gt; options.UseSqlServer(builder.Configuration.GetConnectionString(&quot;Database&quot;))); </span><br></pre></td></tr></table></figure></div>
+
+<h3 id="appsettings">appsettings.json中加入連接字串</h3>
+<p>本地</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;ConnectionStrings&quot;: &#123; &quot;Database&quot;: &quot;Server=.\\SQLExpress; Database=Zugether1;Integrated Security=True; TrustServerCertificate=true&quot; &#125;</span><br></pre></td></tr></table></figure></div>
+<p>SQL</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;ConnectionStrings&quot;: &#123; &quot;Database&quot;: &quot;Server=.\\SQLExpress;Database=Web;User ID=sa1;Password=P@ssw@rd;TrustServerCertificate=true&quot; &#125; </span><br></pre></td></tr></table></figure></div>
+<p><strong style="color:red;">"Database" : 可自訂名稱 </strong></p>
+<!-- ------------------------------------------------------------------------------------- -->
+<h2 id="controller">Controller.cs 加入以下代碼</h2>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">public class NorthwindController : ControllerBase</span><br><span class="line"> &#123;</span><br><span class="line">     //資料庫物件名稱的類別 宣告資料庫物件</span><br><span class="line">     private readonly NorthwindContext _context;</span><br><span class="line">     //建構式(Constructor)</span><br><span class="line">     //取得依賴注入物件（Dependency Injection，DI）將NorthwindContext物件注入到控制器中</span><br><span class="line">     public NorthwindController(NorthwindContext context)</span><br><span class="line">     &#123;</span><br><span class="line">         _context = context;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></div>]]></content>
       <categories>
-        <category>心情分享</category>
+        <category>整理記錄</category>
       </categories>
       <tags>
-        <tag>文章</tag>
-        <tag>測試</tag>
+        <tag>.Net</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>整理通用與redefine主題設定</title>
+    <url>/2025/01/10/RedefineDescription/</url>
+    <content><![CDATA[<style>
+    .table_border{border-style: solid;
+        border-color: black;
+        border-width: 2px;}
+
+    img{max-height:500px;}    
+    a{color: blue;}
+
+    /* 覆蓋設定navbar*/
+    /* redefine_navbar_hover_color --primary-color: #a31f34; */
+    .navbar-item a{color:black !important;}
+    .navbar-item a:hover{color: #a31f34 !important;}
+</style>
+<!-- ------------------------------------------------------------------------------------- -->
+<h2 id="getting-started">快速開始</h2>
+<h3 id="basic_info">基本設定</h3>
+<ul><a class="link"   href="https://redefine-docs.ohevan.com/zh/basic/info" >請點我<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
+    <li>可變更網頁標題、副標題</li>
+    <li>可變更網頁logo、avatar</li>
+</ul>
+<!-- ------------------------------------------------------------------------------------- -->
+<h3 id="change_count">變更每頁顯示文章數量</h3>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">`# Pagination`</span><br><span class="line">per_page: 10</span><br><span class="line">pagination_dir: page</span><br></pre></td></tr></table></figure></div>
+<ul>在 Hexo 的根目錄 _config.yml 中
+    <li>per_page: 每頁顯示的文章數量</li>
+    <li>pagination_dir: 分頁的目錄名稱。例如，分頁網址會是 /page/2/</li>
+</ul>
+<hr>
+<!-- ------------------------------------------------------------------------------------- -->
+<h3 id="navbar">navbar設定</h3>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://i.imgur.com/haA52LH.png"
+                     
+                >
+<a class="link"   href="https://redefine-docs.ohevan.com/zh/home/navbar" >請點我<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
+
+  <div class="note-large default">
+    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
+      <p>_config.redefine.yml</p>
+
+    </div>
+    <div class="notel-content">
+      <p>navbar:<br>  links:<br>    Home: # 主選單(row)名稱<br>    path: &#x2F; # 網址，可以是相對路徑或絕對路徑<br>    icon: fa-regular fa-house # Fontawesome圖示名稱（可選）</p>
+
+    </div>
+  </div>
+<hr>
+<!-- ------------------------------------------------------------------------------------- -->
+<h4>設定navbar語言</h4>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://i.imgur.com/dTZfQZu.png"
+                     
+                >
+<strong>請到<span class="text-danger">根目錄 _config.yml </span>中的 language 項目</strong>
+<a class="link"   href="https://redefine-docs.ohevan.com/zh/language" >請點我<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
+
+  <div class="note-large default">
+    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
+      <p>_config.yml</p>
+
+    </div>
+    <div class="notel-content">
+      <p><code># Site</code><br>title: Ting’s Blog<br>subtitle: 這是一個關於技術分享、記錄心情的個人blog。<br>description: ‘’<br>keywords:<br>author: Ting<br>language: en<br>timezone: Asia&#x2F;Taipei</p>
+
+    </div>
+  </div>
+<hr>
+<!-- ------------------------------------------------------------------------------------- -->
+<h3 id="css_customize">自訂css</h3>
+<p><strong>/themes/redefine/layout/layout.ejs</strong></p>
+<pre class="m-0 p-0"><span>全局文章的相關設定</span>
+    /* 整個文章容器 */
+    .article-content-container{padding:10px 20px !important;}
+        ------------------------------------------------------
+        p{font-size:18px;}
+        strong{font-size:18px;}
+        /* 設定文章側邊目錄(toc) */
+        .nav-item{font-size: 15px !important;}
+        .toc-content-container{margin: 0 !important; padding: 0 !important;}
+         ------------------------------------------------------
+        /* 首頁調整文章區塊版面 */
+		.home-article-item{margin: 10px !important; padding: 0 !important;}
+</pre>
+<hr>
+<p><strong>/source/_posts/RedefineDescription.md</strong></p>
+<pre class="m-0 p-0"><span>此篇文章設定</span>
+    /* 覆蓋設定navbar*/
+    /* redefine_navbar_hover_color --primary-color: #a31f34; */
+    .navbar-item a{color:black !important;}
+    .navbar-item a:hover{color: #a31f34 !important;}
+</pre>
+<hr>
+<h4 style="color:red;">設定首頁文章排列區塊版面</h4>
+<p><strong>/themes/redefine/layout/pages/home/home-content.ejs</strong></p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">div class=&quot;flex flex-col gap-3 px-3 pb-3 &lt;%= post.thumbnail !== false &amp;&amp; (post.thumbnail || post.cover || post.banner) ? &quot;pt-5&quot; : &quot;pt-7&quot; %&gt;&quot;&gt;&gt;</span><br></pre></td></tr></table></figure></div>
+<hr>
+<!-- ------------------------------------------------------------------------------------- -->
+<h2 id="article_customize">自訂文章</h2>
+<h3 id="edit_excerpt">編輯摘要</h3>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://i.imgur.com/HjpTWeM.png"
+                     
+                >
+<a class="link"  class="a_href"  href="https://redefine-docs.ohevan.com/zh/article_customize/excerpt" >請點我<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
+<hr>
+<!-- ------------------------------------------------------------------------------------- -->
+<h3 id="set_max_width">調整最大寬度</h3>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://i.imgur.com/LpbDh3j.png"
+                     
+                >
+<a class="link"  class="a_href"  href="https://redefine-docs.ohevan.com/zh/basic/global" >請點我<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
+
+  <div class="note-large default">
+    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
+      <p>content</p>
+
+    </div>
+    <div class="notel-content">
+      <p>global.content_max_width</p>
+
+    </div>
+  </div>
+
+  <div class="note-large default">
+    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
+      <p>sidebar</p>
+
+    </div>
+    <div class="notel-content">
+      <p>global.sidebar_width</p>
+
+    </div>
+  </div>
+<hr>
+<!-- ------------------------------------------------------------------------------------- -->
+<h3 id="sidebar">首頁文章側邊欄</h3>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://i.imgur.com/EOShqLn.png"
+                     
+                >
+<a class="link"  class="a_href"  href="https://redefine-docs.ohevan.com/zh/home/home" >請點我<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
+
+<h2 id="article_toc">內容文章側邊目錄</h2>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://i.imgur.com/cpjXf6R.png"
+                     
+                >
+<a class="link"  class="a_href"  href="https://redefine-docs.ohevan.com/zh/posts/articles" >請點我<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
+<hr>
+<!-- ------------------------------------------------------------------------------------- -->
+<h2 id="page_templates">頁面相關設定</h2>
+<strong style="color:red;">如要在導覽列使用tags、categories功能請先創建頁面</strong>
+<h3 id="tag">標籤tags</h3>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://i.imgur.com/TNCKtSB.png"
+                     
+                >
+<a class="link"  class="a_href"  href="https://redefine-docs.ohevan.com/zh/page_templates/tags" >請點我<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
+<hr>
+<!-- ------------------------------------------------------------------------------------- -->
+<h3 id="categories">分類categories</h3>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://i.imgur.com/6OokAXo.png"
+                     
+                >
+<a class="link"  class="a_href"  href="https://redefine-docs.ohevan.com/zh/page_templates/categories" >請點我<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
+<hr>
+<!-- ------------------------------------------------------------------------------------- -->
+<h3 id="notes">筆記模塊</h3>
+<h4 id="big_note">大提示塊</h4>
+<p>格式：（notel 意思是 note large ，也可以寫成 note-large ）</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;% notel [顏色] [可選: 自訂圖標] [標题] %&#125;</span><br><span class="line">内容</span><br><span class="line">支持换行</span><br><span class="line">&#123;% endnotel %&#125;</span><br></pre></td></tr></table></figure></div>
+<a class="link"  class="a_href"  href="https://redefine-docs.ohevan.com/zh/modules/notes" >詳細說明<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
+<table class="">
+    <thead>
+        <tr class="">
+            <th>參數</th>
+            <th>說明</th>
+            <th>可選值</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>颜色</td>
+            <td>提示區塊的樣式或顏色</td>
+            <td>blue red cyan purple orange yellow green等颜色</td>
+        </tr>
+        <tr>
+            <td>自訂圖標</td>
+            <td>自訂圖標，選填</td>
+            <td>Font Awesome  的圖示名稱後半部,例如 fa-image</td>
+        </tr>
+    </tbody>
+</table>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;% notel default fa-info 標題 %&#125;</span><br><span class="line">可換行</span><br><span class="line">可換行</span><br><span class="line">可換行</span><br><span class="line">&#123;% endnotel %&#125;</span><br><span class="line">---------------------------------</span><br><span class="line">&#123;% notel red 自定標題 %&#125;</span><br><span class="line">可換行</span><br><span class="line">可換行</span><br><span class="line">可換行</span><br><span class="line">&#123;% endnotel %&#125;</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://i.imgur.com/76mMbzK.png"
+                     
+                >
+<hr>
+
+<!-- ------------------------------------------------------------------------------------- -->
+<h4 id="small_note">小提示塊</h4>
+<p>格式：</p>
+<table class="">
+    <thead>
+        <tr class="">
+            <th>參數</th>
+            <th>說明</th>
+            <th>可選值</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>樣式/顏色</td>
+            <td>提示區塊的樣式或顏色</td>
+            <td>success default primary info warning danger tip question 以及 blue red cyan purple orange yellow green等颜色</td>
+        </tr>
+        <tr>
+            <td>自訂圖標</td>
+            <td>自訂圖標，選填</td>
+            <td>Font Awesome  的圖示名稱後半部,例如 fa-image</td>
+        </tr>
+    </tbody>
+</table>
+<p>範例: </p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;% note %&#125; 預設 提示區塊標籤 &#123;% endnote %&#125;</span><br><span class="line">&#123;% note default %&#125; default 提示區塊標籤&#123;% endnote %&#125;</span><br><span class="line">&#123;% note primary %&#125; primary 提示區塊標籤 &#123;% endnote %&#125;</span><br><span class="line">&#123;% note success %&#125; success 提示區塊標籤 &#123;% endnote %&#125;</span><br><span class="line">&#123;% note info %&#125; info 提示區塊標籤 &#123;% endnote %&#125;</span><br><span class="line">&#123;% note warning %&#125; warning 提示區塊標籤 &#123;% endnote %&#125;</span><br><span class="line">&#123;% 註 danger %&#125; danger 提示區塊標籤 &#123;% endnote %&#125;</span><br><span class="line">&#123;% note red fa-bolt%&#125; 自訂提示區塊標籤 &#123;% endnote %&#125;</span><br></pre></td></tr></table></figure></div>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://i.imgur.com/9l5LhKB.png"
+                     
+                >
+<hr>
+<!-- ------------------------------------------------------------------------------------- -->
+
+<h3 id="close_count_word">關閉字數、閱讀時間</h3>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://i.imgur.com/d6xCCIl.png"
+                     
+                >
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://i.imgur.com/23F898U.png"
+                     
+                >
+<a class="link"  class="a_href"  href="https://redefine-docs.ohevan.com/zh/footer" >請點我<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
+<hr>
+<!-- ------------------------------------------------------------------------------------- -->
+<h2 id="footer">頁腳設定</h2>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://i.imgur.com/wAT9iWO.png"
+                     
+                >
+<a class="link"  class="a_href"  href="https://redefine-docs.ohevan.com/zh/posts/articles" >請點我<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>]]></content>
+      <categories>
+        <category>整理記錄</category>
+      </categories>
+      <tags>
+        <tag>redefine</tag>
       </tags>
   </entry>
 </search>

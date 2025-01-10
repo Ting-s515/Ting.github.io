@@ -13,7 +13,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://ting-s515.github.io/404.html"/>
+    <link rel="canonical" href="https://ting-s515.github.io/2025/01/10/netconnectdb/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -22,14 +22,17 @@
     
         
         <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Page Not Found">
-<meta property="og:url" content="https://ting-s515.github.io/404.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content=".Net資料庫連接db">
+<meta property="og:url" content="https://ting-s515.github.io/2025/01/10/NetConnectDB/index.html">
 <meta property="og:site_name" content="Ting&#39;s Blog">
 <meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://ting-s515.github.io/images/redefine-og.webp">
+<meta property="article:published_time" content="2025-01-10T11:48:02.000Z">
+<meta property="article:modified_time" content="2025-01-10T12:07:31.539Z">
 <meta property="article:author" content="Ting">
+<meta property="article:tag" content=".Net">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://ting-s515.github.io/images/redefine-og.webp">
     
@@ -43,7 +46,7 @@
     
     <title>
         
-            Page Not Found | Ting&#39;s blog
+            .Net資料庫連接db | Ting&#39;s blog
         
     </title>
 
@@ -309,28 +312,234 @@
 			
 
 			<div class="main-content">
-				<div class="page-template-container">
-	
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
 
-	
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">.Net資料庫連接db</h1>
+			</div>
+			
+		</div>
 
-	<div class="page-template-content markdown-body">
 		
-		<h1>Page Not Found</h1>
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/images/avatar.jpg">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">Ting</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-01-10 19:48:02</span>
+        <span class="mobile">2025-01-10 19:48:02</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-01-10 20:07:31</span>
+            <span class="mobile">2025-01-10 20:07:31</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E6%95%B4%E7%90%86%E8%A8%98%E9%8C%84/">整理記錄</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Net/">.Net</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+</div>
+
+				</div>
+			</div>
+		</div>
 		
 
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<h2 id="install_package">1. 安裝套件</h2>
+<strong>必要項</strong>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Microsoft.EntityFrameworkCore.SqlServer</span><br><span class="line">Microsoft.EntityFrameworkCore.Tools</span><br></pre></td></tr></table></figure></div>
+<strong>非必要項</strong>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Microsoft.AspNetCore.Mvc.NewtonsoftJson (解析JSON)</span><br><span class="line">AutoMapper(自動映射DTO資料型態)</span><br><span class="line">Microsoft.AspNetCore.Authentication.Google </span><br><span class="line">SixLabors.ImageSharp(提取Images格式)</span><br></pre></td></tr></table></figure></div>
+<!-- ------------------------------------------------------------------------------------- -->
+<h2 id="connect_db">2. 連接資料庫字串</h2>
+<p>到套件管理器主控台(檢視>其他視窗>套件管理器主控台)</p>
+
+<h3 id="local_certification">本地認證</h3>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Scaffold-DbContext &quot;Server=.\SQLExpress; Database=TestProject; Integrated Security=True; TrustServerCertificate=true&quot; Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -NoOnConfiguring -UseDatabaseNames -NoPluralize -Force </span><br></pre></td></tr></table></figure></div>
+<!-- ------------------------------------------------------------------------------------- -->
+<h3 id="sql_certification">SQL認證</h3>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Scaffold-DbContext &quot;Server=34.81.75.116;Database=Zugether;User ID=sqlserver;</span><br><span class="line">Password=qwe321;TrustServerCertificate=true&quot; Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -NoOnConfiguring -UseDatabaseNames -NoPluralize -Force</span><br></pre></td></tr></table></figure></div>
+<ul>說明參數
+    <li>Integrated Security=True: 使用 Windows 認證來連接資料庫 。</li>
+    <li>TrustServerCertificate=true: 表示允許接受未經驗證的 SSL 憑證。</li>
+    <li>Microsoft.EntityFrameworkCore.SqlServer: 生成適用於 SQL Server 的代碼。 </li>
+    <li>-OutputDir Models: 存放到名為 Models 的資料夾中。</li>
+    <li>-NoOnConfiguring: 不要生成 OnConfiguring 代碼 。</li>
+    <li>-UseDatabaseNames: 在生成類別和屬性名稱時，使用資料庫中的名稱 </li>
+    <li>-NoPluralize: 不要對生成的類別名稱進行複數化處理 +s。</li>
+    <li>-Force: 強制覆寫現有的模型。如果已經生成過模型類別，這個選項會強制覆蓋這些檔案。</li>
+</ul>
+
+<h3 id="di">Program.cs中加入資料庫物件的注入。</h3>
+<p>在var app = builder.Build(); 之前</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">builder.Services.AddDbContext&lt;WebContext&gt;(options =&gt; options.UseSqlServer(builder.Configuration.GetConnectionString(&quot;Database&quot;))); </span><br></pre></td></tr></table></figure></div>
+
+<h3 id="appsettings">appsettings.json中加入連接字串</h3>
+<p>本地</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;ConnectionStrings&quot;: &#123; &quot;Database&quot;: &quot;Server=.\\SQLExpress; Database=Zugether1;Integrated Security=True; TrustServerCertificate=true&quot; &#125;</span><br></pre></td></tr></table></figure></div>
+<p>SQL</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;ConnectionStrings&quot;: &#123; &quot;Database&quot;: &quot;Server=.\\SQLExpress;Database=Web;User ID=sa1;Password=P@ssw@rd;TrustServerCertificate=true&quot; &#125; </span><br></pre></td></tr></table></figure></div>
+<p><strong style="color:red;">"Database" : 可自訂名稱 </strong></p>
+<!-- ------------------------------------------------------------------------------------- -->
+<h2 id="controller">Controller.cs 加入以下代碼</h2>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class NorthwindController : ControllerBase</span><br><span class="line"> &#123;</span><br><span class="line">     //資料庫物件名稱的類別 宣告資料庫物件</span><br><span class="line">     private readonly NorthwindContext _context;</span><br><span class="line">     //建構式(Constructor)</span><br><span class="line">     //取得依賴注入物件（Dependency Injection，DI）將NorthwindContext物件注入到控制器中</span><br><span class="line">     public NorthwindController(NorthwindContext context)</span><br><span class="line">     &#123;</span><br><span class="line">         _context = context;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></div>
+		</div>
+
+		
+
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/Net/">#.Net</a>&nbsp;
+			</li>
+			
+		</ul>
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			<div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="prev" rel="prev" href="/2025/01/10/HashPassword/">
+					<span class="left arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-left"></i>
+					</span>
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">整理有關哈希密碼與ILogger相關程式</span>
+						<span class="post-nav-item">Prev posts</span>
+					</span>
+				</a>
+			</div>
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2025/01/10/RedefineDescription/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">整理通用與redefine主題設定</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+		<div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+			<div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-TW',
+          dark: 'body[class~="dark-mode"]',
+          reaction: false,
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+		</div>
 		
 	</div>
 
-	<div class="page-template-comments">
-		
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">.Net資料庫連接db</div>
+		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#install_package"><span class="nav-text">1. 安裝套件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#connect_db"><span class="nav-text">2. 連接資料庫字串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#local_certification"><span class="nav-text">本地認證</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sql_certification"><span class="nav-text">SQL認證</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#di"><span class="nav-text">Program.cs中加入資料庫物件的注入。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#appsettings"><span class="nav-text">appsettings.json中加入連接字串</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#controller"><span class="nav-text">Controller.cs 加入以下代碼</span></a></li></ol>
+
 	</div>
 </div>
-
-<div class="paginator">
+	</div>
 	
 </div>
-  
 			</div>
 
 			
@@ -398,6 +607,26 @@
 		</div>
 	</div>
 
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+		<li class="go-comment">
+			<i class="fa-regular fa-comments"></i>
+		</li>
+		
+	</ul>
+</div>
+	</div>
 	
 
 	<div class="right-side-tools-container">
@@ -501,6 +730,7 @@
         containers: ["#swup"],
     });
 </script>
+
 
 
 
