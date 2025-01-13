@@ -30,7 +30,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://ting-s515.github.io/images/redefine-og.webp">
 <meta property="article:published_time" content="2025-01-08T15:10:20.000Z">
-<meta property="article:modified_time" content="2025-01-10T09:11:41.403Z">
+<meta property="article:modified_time" content="2025-01-13T06:56:28.587Z">
 <meta property="article:author" content="Ting">
 <meta property="article:tag" content="hexo">
 <meta property="article:tag" content="踩坑">
@@ -288,7 +288,7 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">6</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">10</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -296,7 +296,7 @@
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">4</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">6</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -345,8 +345,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-01-10 17:11:41</span>
-            <span class="mobile">2025-01-10 17:11:41</span>
+            <span class="desktop">2025-01-13 14:56:28</span>
+            <span class="mobile">2025-01-13 14:56:28</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -407,6 +407,7 @@
         border-width: 2px;
         margin:15px 0px !important;}
     .ms-5{margin-left:30px !important; font-size:18px;}
+    th,td{font-size:16px !important;}
        
 </style>
 <!-- ------------------------------------------------------------------------------------- -->
@@ -454,17 +455,28 @@
     <li class="ms-5">當我們建立新文章時，Hexo 會根據 scaffolds 中的模板建立相對應的檔案</li>
     <li class="ms-5">post、page 和 draft，分別對應：要發布的文章、頁面、草稿</li>
 </ul>
+<p>post模板可修改為</p>
+<p><strong>如果有使用format，須注意會影響到markdown語法</strong></p>
+<p><strong class="text-danger">excerpt: 要有預設值，不能為空</strong></p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: &#123;&#123; title &#125;&#125;</span><br><span class="line">date: &#123;&#123; date &#125;&#125;</span><br><span class="line">tags:</span><br><span class="line">categories:</span><br><span class="line">excerpt: &#x27;&#x27;</span><br><span class="line">---</span><br></pre></td></tr></table></figure></div>
+<ul>
+    <li>生成標籤和分類</li>
+    <li>可自訂首頁摘要</li>
+</ul>
+<!-- ------------------------------------------------------------------------------------- -->
 <h4 id="themes">themes</h4>
 <ul>
     <li class="ms-5">用來存放主題的資料夾</li>
     <li class="ms-5">Hexo 會根據主題來解析 scouce 資料夾中的檔案並產生靜態頁面。預設主題為 landscape</li>
 </ul>
+<!-- ------------------------------------------------------------------------------------- -->
 <h4 id="source">source</h4>
 <ul>
     <li class="ms-5">通常資料夾命名開頭會加上底線 _，例如 _imgs</li>
     <li class="ms-5">以 _ 開頭的檔案、資料夾或隱藏檔案會被忽略，除了 _posts 資料夾以外</li>
     <li class="ms-5">Markdown 檔和 HTML 檔會被解析，並放到 public 資料夾，而其他檔案則會被拷貝過去</li>
 </ul>
+<!-- ------------------------------------------------------------------------------------- -->
 <h4 id="source_public_deploy_git">source & public & .deploy_git</h4>
 <ul>
     <li class="ms-5">執行 hexo generate 之後，會將 scorce 文件夾中的 Markdown 檔和 HTML 檔進行解析，再結合主題進行渲染，生成靜態網站</li>
@@ -478,10 +490,73 @@
 </ul>
 <!-- ------------------------------------------------------------------------------------- -->
 <hr>
-<h3 id="common_instructions">4. 常用指令</h3>
+<h3 id="common_command">4. 常用指令</h3>
 
-<h4 id="new_article">new 新增文章</h4>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new 檔名</span><br></pre></td></tr></table></figure></div>
+<h4 id="new_post">post 新增文章</h4>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new post &quot;我的第一篇文章&quot;</span><br></pre></td></tr></table></figure></div>
+<ul>
+    <li>用途：用於創建 文章（Post）。</li>
+    <li>生成位置：文章會被存放在 /source/_posts/ 資料夾中。</li>
+    <ul>特點:
+        <li style="margin-left:40px;">支援分類（Categories）和標籤（Tags）。</li>
+        <li style="margin-left:40px;">自動顯示在文章列表，並支持分頁和排序。</li>
+    </ul>
+    <ul>網址結構
+        <li style="margin-left:40px;">默認網址會是 /YYYY/MM/DD/文章名稱/</li>
+    </ul>
+</ul>
+<h4 id="new_page">page 新增頁面</h4>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page &quot;about&quot;</span><br></pre></td></tr></table></figure></div>
+<ul>
+    <li>用於創建 頁面（Page）。</li>
+    <li>生成位置：頁面會被存放在 /source/ 資料夾的根目錄或自定義資料夾中。</li>
+    <ul>特點:
+        <li style="margin-left:40px;">不會出現在文章列表，通常用於靜態頁面（如關於頁、聯絡頁等）。</li>
+        <li style="margin-left:40px;">頁面可以手動添加到導航欄，作為獨立的功能頁面。</li>
+    </ul>
+    <ul>網址結構
+        <li style="margin-left:40px;">默認網址會是 /about/</li>
+    </ul>
+</ul>
+
+<h5>差異對比</h5>
+<table>
+    <thead>
+        <tr>
+            <th>功能</th>
+            <th>hexo new post</th>
+            <th>hexo new page</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>用途</td>
+            <td>創建博客文章，支持分頁顯示</td>
+            <td>創建靜態頁面，如「關於我」</td>
+        </tr>
+        <tr>
+            <td>存放位置</td>
+            <td>/source/_posts/</td>
+            <td>/source/{頁面名稱}/index.md</td>
+        </tr>
+        <tr>
+            <td>出現在首頁</td>
+            <td>會自動顯示在文章列表中</td>
+            <td>不會顯示，需要手動添加到導航</td>
+        </tr>
+        <tr>
+            <td>支持分類/標籤</td>
+            <td>支持</td>
+            <td>不支持</td>
+        </tr>
+        <tr>
+            <td>網址格式</td>
+            <td>/YYYY/MM/DD/文章名稱/</td>
+            <td>/{頁面名稱}/</td>
+        </tr>
+    </tbody>
+</table>
+<!-- ------------------------------------------------------------------------------------- -->
 <h4 id="clean_file_cache">clean 清除靜態檔案與快取</h4>
 <div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure></div>
 
@@ -652,7 +727,7 @@ toc.js與scroll監聽事件都改了一遍，還是不起作用....，做到一�
 	<div class="post-toc">
 		<div class="toc-title">On this page</div>
 		<div class="page-title">Hexo環境建置、指令紀錄</div>
-		<ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#install_hexo"><span class="nav-text">1. 安裝Hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#initialize_hexo"><span class="nav-text">2. 初始化Hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#folder_install_files"><span class="nav-text">3. Hexo檔案說明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#_config.yml"><span class="nav-text">_config.yml</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scaffolds"><span class="nav-text">scaffolds</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#themes"><span class="nav-text">themes</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#source"><span class="nav-text">source</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#source_public_deploy_git"><span class="nav-text">source &amp; public &amp; .deploy_git</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#common_instructions"><span class="nav-text">4. 常用指令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#new_article"><span class="nav-text">new 新增文章</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#clean_file_cache"><span class="nav-text">clean 清除靜態檔案與快取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#generate_static_file"><span class="nav-text">generate 產生靜態檔案</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#run_server"><span class="nav-text">server 啟動伺服器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#push_github"><span class="nav-text">5. 部屬到GitHub</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#install_git"><span class="nav-text">1. 安裝 Git 相關套件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#edit__config.yml"><span class="nav-text">2. 修改 _config.yml 檔案的 Deployment 設定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#no_refresh"><span class="nav-text">3. 怎麼沒有刷新?</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#description_notes"><span class="nav-text">※ 使用外部套件注意事項</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#bootstrap"><span class="nav-text">bootstrap-utilities.min.css 包含以下內容：</span></a></li></ol></li></ol>
+		<ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#install_hexo"><span class="nav-text">1. 安裝Hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#initialize_hexo"><span class="nav-text">2. 初始化Hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#folder_install_files"><span class="nav-text">3. Hexo檔案說明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#_config.yml"><span class="nav-text">_config.yml</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scaffolds"><span class="nav-text">scaffolds</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#themes"><span class="nav-text">themes</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#source"><span class="nav-text">source</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#source_public_deploy_git"><span class="nav-text">source &amp; public &amp; .deploy_git</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#common_command"><span class="nav-text">4. 常用指令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#new_post"><span class="nav-text">post 新增文章</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#new_page"><span class="nav-text">page 新增頁面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#clean_file_cache"><span class="nav-text">clean 清除靜態檔案與快取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#generate_static_file"><span class="nav-text">generate 產生靜態檔案</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#run_server"><span class="nav-text">server 啟動伺服器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#push_github"><span class="nav-text">5. 部屬到GitHub</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#install_git"><span class="nav-text">1. 安裝 Git 相關套件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#edit__config.yml"><span class="nav-text">2. 修改 _config.yml 檔案的 Deployment 設定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#no_refresh"><span class="nav-text">3. 怎麼沒有刷新?</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#description_notes"><span class="nav-text">※ 使用外部套件注意事項</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#bootstrap"><span class="nav-text">bootstrap-utilities.min.css 包含以下內容：</span></a></li></ol></li></ol>
 
 	</div>
 </div>
@@ -679,7 +754,7 @@ toc.js與scroll監聽事件都改了一遍，還是不起作用....，做到一�
                 
                 <p class="post-count space-x-0.5">
                     <span>
-                        4 posts in total
+                        6 posts in total
                     </span>
                     
                 </p>

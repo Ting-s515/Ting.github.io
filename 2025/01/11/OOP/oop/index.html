@@ -13,7 +13,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://ting-s515.github.io/2025/01/10/netconnectdb/"/>
+    <link rel="canonical" href="https://ting-s515.github.io/2025/01/11/oop/oop/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -23,16 +23,16 @@
         
         <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
 <meta property="og:type" content="article">
-<meta property="og:title" content=".Net資料庫連接db">
-<meta property="og:url" content="https://ting-s515.github.io/2025/01/10/NetConnectDB/index.html">
+<meta property="og:title" content="紀錄物件導向">
+<meta property="og:url" content="https://ting-s515.github.io/2025/01/11/OOP/oop/index.html">
 <meta property="og:site_name" content="Ting&#39;s Blog">
 <meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://ting-s515.github.io/images/redefine-og.webp">
-<meta property="article:published_time" content="2025-01-10T11:48:02.000Z">
-<meta property="article:modified_time" content="2025-01-10T12:07:31.539Z">
+<meta property="article:published_time" content="2025-01-11T10:48:17.000Z">
+<meta property="article:modified_time" content="2025-01-13T04:29:44.738Z">
 <meta property="article:author" content="Ting">
-<meta property="article:tag" content=".Net">
+<meta property="article:tag" content="oop">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://ting-s515.github.io/images/redefine-og.webp">
     
@@ -46,7 +46,7 @@
     
     <title>
         
-            .Net資料庫連接db | Ting&#39;s blog
+            紀錄物件導向 | Ting&#39;s blog
         
     </title>
 
@@ -287,7 +287,7 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">6</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">10</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -295,7 +295,7 @@
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">4</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">6</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -318,7 +318,7 @@
 		<div class="article-title relative w-full">
 			
 			<div class="w-full flex items-center pt-6 justify-start">
-				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">.Net資料庫連接db</h1>
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">紀錄物件導向</h1>
 			</div>
 			
 		</div>
@@ -337,15 +337,15 @@
 					<div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="desktop">2025-01-10 19:48:02</span>
-        <span class="mobile">2025-01-10 19:48:02</span>
+        <span class="desktop">2025-01-11 18:48:17</span>
+        <span class="mobile">2025-01-11 18:48:17</span>
         <span class="hover-info">Created</span>
     </span>
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-01-10 20:07:31</span>
-            <span class="mobile">2025-01-10 20:07:31</span>
+            <span class="desktop">2025-01-13 12:29:44</span>
+            <span class="mobile">2025-01-13 12:29:44</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -373,7 +373,7 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/Net/">.Net</a>&nbsp;
+                        <a href="/tags/oop/">oop</a>&nbsp;
                     </li>
                 
             </ul>
@@ -395,44 +395,101 @@
 
 
 		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-			<h2 id="install_package">1. 安裝套件</h2>
-<strong>必要項</strong>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Microsoft.EntityFrameworkCore.SqlServer</span><br><span class="line">Microsoft.EntityFrameworkCore.Tools</span><br></pre></td></tr></table></figure></div>
-<strong>非必要項</strong>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Microsoft.AspNetCore.Mvc.NewtonsoftJson (解析JSON)</span><br><span class="line">AutoMapper(自動映射DTO資料型態)</span><br><span class="line">Microsoft.AspNetCore.Authentication.Google </span><br><span class="line">SixLabors.ImageSharp(提取Images格式)</span><br></pre></td></tr></table></figure></div>
-<!-- ------------------------------------------------------------------------------------- -->
-<h2 id="connect_db">2. 連接資料庫字串</h2>
-<p>到套件管理器主控台(檢視>其他視窗>套件管理器主控台)</p>
-
-<h3 id="local_certification">本地認證</h3>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Scaffold-DbContext &quot;Server=.\SQLExpress; Database=TestProject; Integrated Security=True; TrustServerCertificate=true&quot; Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -NoOnConfiguring -UseDatabaseNames -NoPluralize -Force </span><br></pre></td></tr></table></figure></div>
-<!-- ------------------------------------------------------------------------------------- -->
-<h3 id="sql_certification">SQL認證</h3>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Scaffold-DbContext &quot;Server=34.81.75.116;Database=Zugether;User ID=sqlserver;</span><br><span class="line">Password=qwe321;TrustServerCertificate=true&quot; Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -NoOnConfiguring -UseDatabaseNames -NoPluralize -Force</span><br></pre></td></tr></table></figure></div>
-<ul>說明參數
-    <li>Integrated Security=True: 使用 Windows 認證來連接資料庫 。</li>
-    <li>TrustServerCertificate=true: 表示允許接受未經驗證的 SSL 憑證。</li>
-    <li>Microsoft.EntityFrameworkCore.SqlServer: 生成適用於 SQL Server 的代碼。 </li>
-    <li>-OutputDir Models: 存放到名為 Models 的資料夾中。</li>
-    <li>-NoOnConfiguring: 不要生成 OnConfiguring 代碼 。</li>
-    <li>-UseDatabaseNames: 在生成類別和屬性名稱時，使用資料庫中的名稱 </li>
-    <li>-NoPluralize: 不要對生成的類別名稱進行複數化處理 +s。</li>
-    <li>-Force: 強制覆寫現有的模型。如果已經生成過模型類別，這個選項會強制覆蓋這些檔案。</li>
+			<style>
+    a{color:blue;}
+    /* 覆蓋設定navbar*/
+    /* redefine_navbar_hover_color --primary-color: #a31f34; */
+    .navbar-item a{color:black !important;}
+    .navbar-item a:hover{color: #a31f34 !important;}
+    p{letter-spacing:2px;}
+</style>
+<p>物件導向只是一種『設計概念 (design concept)』，而不是一種程式語法</p>
+<h2 id="oop">三大特性</h2>
+<ul>
+    <li>封裝(Encapsulation)</li>
+    <li>繼承(Inheritance)</li>
+    <li>多型(Polymorphism)</li>
 </ul>
+<h3 id="Encapsulation">封裝(Encapsulation)</h3>
+<p><strong>把物件隱藏在類別裡，通過設定存取權限，只開放公開的方法讓別人可以使用，把內部實作細節隱藏，做到保護資料的目的
+</strong></p>
+<a class="link"   target="_blank" rel="noopener" href="https://yubin551.gitbook.io/java-note/object_oriented_programming/encapsulation" >詳細資料<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
 
-<h3 id="di">Program.cs中加入資料庫物件的注入。</h3>
-<p>在var app = builder.Build(); 之前</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">builder.Services.AddDbContext&lt;WebContext&gt;(options =&gt; options.UseSqlServer(builder.Configuration.GetConnectionString(&quot;Database&quot;))); </span><br></pre></td></tr></table></figure></div>
+<p>例如說"提款機"</p>
+<p>你不需要知道內部還有多少錢，也不需要知道實際運作流程，你只要插入卡片，輸入密碼即可，接著就可以透過螢幕上按鈕互動</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class ATM&#123;</span><br><span class="line">    private int 剩餘金額;</span><br><span class="line">    private boolean 身分確認(密碼)&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;;</span><br><span class="line">    public void 提款()&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    public void 查詢餘額(密碼)&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h4 id="common">常見修飾子</h4>
+<h5>private</h5>
+<p>開放權限最低，只有同類別的成員可存取</p>
 
-<h3 id="appsettings">appsettings.json中加入連接字串</h3>
-<p>本地</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;ConnectionStrings&quot;: &#123; &quot;Database&quot;: &quot;Server=.\\SQLExpress; Database=Zugether1;Integrated Security=True; TrustServerCertificate=true&quot; &#125;</span><br></pre></td></tr></table></figure></div>
-<p>SQL</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;ConnectionStrings&quot;: &#123; &quot;Database&quot;: &quot;Server=.\\SQLExpress;Database=Web;User ID=sa1;Password=P@ssw@rd;TrustServerCertificate=true&quot; &#125; </span><br></pre></td></tr></table></figure></div>
-<p><strong style="color:red;">"Database" : 可自訂名稱 </strong></p>
+<h5>public</h5>
+<p>可被所有類別存取</p>
+
+<h5>protected</h5>
+<p>可被不同package的子類別(繼承)存取</p>
+
+<h5>default</h5>
+<p>只能被同個package存取</p>
+
 <!-- ------------------------------------------------------------------------------------- -->
-<h2 id="controller">Controller.cs 加入以下代碼</h2>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class NorthwindController : ControllerBase</span><br><span class="line"> &#123;</span><br><span class="line">     //資料庫物件名稱的類別 宣告資料庫物件</span><br><span class="line">     private readonly NorthwindContext _context;</span><br><span class="line">     //建構式(Constructor)</span><br><span class="line">     //取得依賴注入物件（Dependency Injection，DI）將NorthwindContext物件注入到控制器中</span><br><span class="line">     public NorthwindController(NorthwindContext context)</span><br><span class="line">     &#123;</span><br><span class="line">         _context = context;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></div>
+<h3 id="Inheritance">繼承 (Inheritance)</h3>
+<p><strong>子類別會擁有父類別全部的成員及方法，可以再透過覆寫(override)實作專屬自己的屬性
+</strong></p>
+<a class="link"   target="_blank" rel="noopener" href="https://yubin551.gitbook.io/java-note/object_oriented_programming/inheritance" >詳細資料<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
+<!-- ------------------------------------------------------------------------------------- -->
+<h3 id="Polymorphism">多型(Polymorphism)</h3>
+<p><strong>指方法名稱相同，但參數數量、資料格式、回傳值不同的方法
+</strong></p>
+<a class="link"   target="_blank" rel="noopener" href="https://yubin551.gitbook.io/java-note/object_oriented_programming/polymorphism" >詳細資料<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
+
+<!-- ------------------------------------------------------------------------------------- -->
+<h3 id="Abstract">抽象(Abstract)</h3>
+<a class="link"   target="_blank" rel="noopener" href="https://yubin551.gitbook.io/java-note/object_oriented_programming/abstract" >詳細資料<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
+<p>抽象可以想像成一種概念，並不存在於世界上。</p>
+<p>在『多型』的章節中，我們有一個Animal的類別，但現實生活中有這個東西嗎？ 動物只是一個概念，並沒有一種生物叫作動物。 狗、鳥、魚都是實際存在於世界上的實體，他們都是動物，現實中卻沒有一個實體叫作動物。</p>
+<p>如果聽起來卡卡的，再反覆讀幾次。 所以我們可以把動物視為一種『概念』，他是抽象的，不存在於世界上的。 而Dog、Bird、Fish都具備這個概念的特質，所以繼承Animal。</p>
+<!-- ------------------------------------------------------------------------------------- -->
+<h4 id="abstract_class">抽象類別 abstract class</h4>
+<p>利用abstract來修飾類別，可以使類別變成抽象類別，使用方法：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">abstract class 類別名稱&#123;</span><br><span class="line">    // 成員定義...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>抽象是一個概念，而不是一個存在的實體。同樣的，抽象類別不能被實體化。</p>
+<strong>可使用繼承去實作抽象類別</strong>
+<!-- ------------------------------------------------------------------------------------- -->
+<h4 id="abstract_method">抽象方法 abstract method</h4>
+<p>利用abstract，可以使方法變成抽象方法，抽象方法只能寫方法的原型，無法定義方法的本體(不能有{})。</p>
+
+<p>使用格式：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">abstract &lt;修飾子&gt; 回傳型態 方法名稱(&lt;參數...&gt;);</span><br></pre></td></tr></table></figure></div>
+<p>範例：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">abstract void eat();</span><br></pre></td></tr></table></figure></div>
+<p>錯誤範例：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">abstract void eat()&#123;    // 編譯錯誤：Abstract methods do not specify a body</span><br><span class="line">    // 不管有沒有寫東西，都編譯錯誤，抽象方法不能定義方法本體</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<ul>注意事項
+    <li>抽象方法只能定義在抽象類別中。 (否則會編譯錯誤)</li>
+    <li>繼承抽象的類別必須實作(override)全部抽象方法。 (否則會編譯錯誤)</li>
+</ul>
+<p>如果子類別沒有實作抽象方法，則子類別必須定義為抽象類別。</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class Cat extends Animal &#123;</span><br><span class="line">    // 沒有實作 eat() 方法，會導致編譯錯誤</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>將 Cat 定義為抽象類別，則不需要實作 eat()</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">abstract class Cat extends Animal &#123;</span><br><span class="line">    // 不需要實作 eat()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<!-- ------------------------------------------------------------------------------------- -->
+<h3 id="Interface">介面(Interface)</h3>
+<a class="link"   target="_blank" rel="noopener" href="https://yubin551.gitbook.io/java-note/object_oriented_programming/interface" >詳細資料<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
+<p>假設電器設備指的是可以從台灣電力公司取得需要的電源。</p>
+<p>冰箱跟烤箱都可以接受台灣電力公司的電源，這兩個東西都可以視為電器設備，但這兩個東西在繼承關係上可說是相差很遠的。</p>
+<p>所以我們可以說，冰箱跟烤箱擁有相同的『 行為 』，在這裡指的就是接受並運用這個110/220伏特的交流電。</p>
+<h5>介面，描述不同類別的共通行為。</h5>
+
+<p>例如：</p>
+<p>物件 -> 冷藏設備 -> 冰箱。</p>
+<p>物件 -> 加熱設備 -> 烤箱。</p>
+<p>由於<strong>Java不允許多重繼承</strong>(任何類別只能有一個父類別)，所以沒辦法讓冰箱既是冷藏設備又是電器設備。</p>
+<!-- ------------------------------------------------------------------------------------- -->
+<h5>無法多重繼承：</h5>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">class 冰箱 extends 冷藏設備,電器設備&#123;  // 編譯錯誤，不允許多重繼承</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>從現實中來看，冰箱跟烤箱只有 『 使用台電提供的電 』 這個共通的行為，因此我們把電器設備定義為介面，如此一來冰箱跟烤箱都可以『 實作 』這個介面，從而具有這個介面的特性，台電也很清楚的知道只要送出的電可以讓『 電器設備 』這個介面使用就好，任何需要電的設備只要符合這個介面制訂的規則，就可以獲得電力。</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class 冰箱 extends 冷藏設備 implements 電氣設備&#123; // 繼承冷藏設備，實作電器設備這個介面</span><br><span class="line">    // 成員宣告</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>如此一來，冰箱就可以視為電器設備，當作電器設備來使用。</p>
 		</div>
 
 		
@@ -441,7 +498,7 @@
 		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
 			
 			<li class="tag-item mx-0.5">
-				<a href="/tags/Net/">#.Net</a>&nbsp;
+				<a href="/tags/oop/">#oop</a>&nbsp;
 			</li>
 			
 		</ul>
@@ -453,12 +510,12 @@
 		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
 			
 			<div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
-				<a class="prev" rel="prev" href="/2025/01/10/HashPassword/">
+				<a class="prev" rel="prev" href="/2025/01/13/net/MemberProgram/">
 					<span class="left arrow-icon flex justify-center items-center">
 						<i class="fa-solid fa-chevron-left"></i>
 					</span>
 					<span class="title flex justify-center items-center">
-						<span class="post-nav-title-item">整理有關哈希密碼與ILogger相關程式</span>
+						<span class="post-nav-title-item">紀錄MVC、API註冊登入會員</span>
 						<span class="post-nav-item">Prev posts</span>
 					</span>
 				</a>
@@ -466,9 +523,9 @@
 			
 			
 			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
-				<a class="next" rel="next" href="/2025/01/10/RedefineDescription/">
+				<a class="next" rel="next" href="/2025/01/10/net/HashPassword/">
 					<span class="title flex justify-center items-center">
-						<span class="post-nav-title-item">整理通用與redefine主題設定</span>
+						<span class="post-nav-title-item">整理有關哈希密碼與ILogger相關程式</span>
 						<span class="post-nav-item">Next posts</span>
 					</span>
 					<span class="right arrow-icon flex justify-center items-center">
@@ -532,8 +589,8 @@
 		<div class="post-toc-wrap">
 	<div class="post-toc">
 		<div class="toc-title">On this page</div>
-		<div class="page-title">.Net資料庫連接db</div>
-		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#install_package"><span class="nav-text">1. 安裝套件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#connect_db"><span class="nav-text">2. 連接資料庫字串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#local_certification"><span class="nav-text">本地認證</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sql_certification"><span class="nav-text">SQL認證</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#di"><span class="nav-text">Program.cs中加入資料庫物件的注入。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#appsettings"><span class="nav-text">appsettings.json中加入連接字串</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#controller"><span class="nav-text">Controller.cs 加入以下代碼</span></a></li></ol>
+		<div class="page-title">紀錄物件導向</div>
+		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#oop"><span class="nav-text">三大特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Encapsulation"><span class="nav-text">封裝(Encapsulation)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#common"><span class="nav-text">常見修飾子</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Inheritance"><span class="nav-text">繼承 (Inheritance)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Polymorphism"><span class="nav-text">多型(Polymorphism)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Abstract"><span class="nav-text">抽象(Abstract)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#abstract_class"><span class="nav-text">抽象類別 abstract class</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#abstract_method"><span class="nav-text">抽象方法 abstract method</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Interface"><span class="nav-text">介面(Interface)</span></a></li></ol></li></ol>
 
 	</div>
 </div>
@@ -560,7 +617,7 @@
                 
                 <p class="post-count space-x-0.5">
                     <span>
-                        4 posts in total
+                        6 posts in total
                     </span>
                     
                 </p>

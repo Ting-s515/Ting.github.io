@@ -1,49 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>整理有關哈希密碼與ILogger相關程式</title>
-    <url>/2025/01/10/HashPassword/</url>
-    <content><![CDATA[<h2 id="create_obj">先建立PasswordHasher物件</h2>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">private readonly PasswordHasher&lt;memberTable&gt; _passwordHasher;</span><br><span class="line">private readonly ILogger&lt;RegisterAndLoginController&gt; _logger;</span><br><span class="line">//注入控制器</span><br><span class="line">public RegisterAndLoginController(CitybreakContext context, ILogger&lt;當前的Controller&gt; logger)</span><br><span class="line">&#123;</span><br><span class="line">	_context = context;</span><br><span class="line">	_passwordHasher = new PasswordHasher&lt;memberTable&gt;();</span><br><span class="line">	_logger = logger;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-<h2 id="register">註冊</h2>
-<p>語法說明</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">memberData.password = _passwordHasher.HashPassword(memberTable user, string password);</span><br></pre></td></tr></table></figure></div>
-<ul>
-    <li>memberData.password: 自訂資料表物件.欄位</li>
-    <li>_passwordHasher: 物件</li>
-    <li>.HashPassword: 方法名稱，負責加密</li>
-    <li>第一個參數: 傳入資料表物件，比如根據用戶的某些屬性進一步自定義加密邏輯。在這邊可以使用null
-    ，表示直接對傳入的密碼進行加密</li>
-    <li>第二個參數: 需要加密的字串</li>
-</ul>
-
-<h2 id="login">登入</h2>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">//比對密碼</span><br><span class="line">PasswordVerificationResult result = _passwordHasher.VerifyHashedPassword</span><br><span class="line">        (member, member.password, value.password);</span><br><span class="line">//接受三個參數：用戶實體、存儲的哈希密碼和用戶輸入的密碼</span><br><span class="line">if (result == PasswordVerificationResult.Success)</span><br></pre></td></tr></table></figure></div>
-<h4>PasswordVerificationResult</h4>
-<ul>這是 Microsoft.AspNetCore.Identity 提供的一個型別，表示密碼驗證的結果
-    <li>Success：驗證成功，密碼正確。</li>
-    <li>Failed：驗證失敗，密碼不正確。</li>
-    <li>SuccessRehashNeeded：密碼驗證成功，但需要重新哈希密碼（例如，哈希算法升級或安全策略改變）。</li>
-</ul>
-
-<h4>VerifyHashedPassword</h4>
-<ul>主要是比對已儲存的哈希密碼與用戶輸入的原始密碼。
-    <li>memberTable user: 用戶物件</li>
-    <li>hashedPassword: 資料庫中儲存的經過哈希的密碼。</li>
-    <li>providedPassword: 用戶輸入的密碼</li>
-</ul>
-
-]]></content>
-      <categories>
-        <category>整理記錄</category>
-      </categories>
-      <tags>
-        <tag>hash</tag>
-        <tag>.Net</tag>
-        <tag>ILogger</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hexo環境建置、指令紀錄</title>
     <url>/2025/01/08/HexoDescription/</url>
     <content><![CDATA[<style>
@@ -53,6 +10,7 @@
         border-width: 2px;
         margin:15px 0px !important;}
     .ms-5{margin-left:30px !important; font-size:18px;}
+    th,td{font-size:16px !important;}
        
 </style>
 <!-- ------------------------------------------------------------------------------------- -->
@@ -100,17 +58,28 @@
     <li class="ms-5">當我們建立新文章時，Hexo 會根據 scaffolds 中的模板建立相對應的檔案</li>
     <li class="ms-5">post、page 和 draft，分別對應：要發布的文章、頁面、草稿</li>
 </ul>
+<p>post模板可修改為</p>
+<p><strong>如果有使用format，須注意會影響到markdown語法</strong></p>
+<p><strong class="text-danger">excerpt: 要有預設值，不能為空</strong></p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: &#123;&#123; title &#125;&#125;</span><br><span class="line">date: &#123;&#123; date &#125;&#125;</span><br><span class="line">tags:</span><br><span class="line">categories:</span><br><span class="line">excerpt: &#x27;&#x27;</span><br><span class="line">---</span><br></pre></td></tr></table></figure></div>
+<ul>
+    <li>生成標籤和分類</li>
+    <li>可自訂首頁摘要</li>
+</ul>
+<!-- ------------------------------------------------------------------------------------- -->
 <h4 id="themes">themes</h4>
 <ul>
     <li class="ms-5">用來存放主題的資料夾</li>
     <li class="ms-5">Hexo 會根據主題來解析 scouce 資料夾中的檔案並產生靜態頁面。預設主題為 landscape</li>
 </ul>
+<!-- ------------------------------------------------------------------------------------- -->
 <h4 id="source">source</h4>
 <ul>
     <li class="ms-5">通常資料夾命名開頭會加上底線 _，例如 _imgs</li>
     <li class="ms-5">以 _ 開頭的檔案、資料夾或隱藏檔案會被忽略，除了 _posts 資料夾以外</li>
     <li class="ms-5">Markdown 檔和 HTML 檔會被解析，並放到 public 資料夾，而其他檔案則會被拷貝過去</li>
 </ul>
+<!-- ------------------------------------------------------------------------------------- -->
 <h4 id="source_public_deploy_git">source & public & .deploy_git</h4>
 <ul>
     <li class="ms-5">執行 hexo generate 之後，會將 scorce 文件夾中的 Markdown 檔和 HTML 檔進行解析，再結合主題進行渲染，生成靜態網站</li>
@@ -124,10 +93,73 @@
 </ul>
 <!-- ------------------------------------------------------------------------------------- -->
 <hr>
-<h3 id="common_instructions">4. 常用指令</h3>
+<h3 id="common_command">4. 常用指令</h3>
 
-<h4 id="new_article">new 新增文章</h4>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new 檔名</span><br></pre></td></tr></table></figure></div>
+<h4 id="new_post">post 新增文章</h4>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new post &quot;我的第一篇文章&quot;</span><br></pre></td></tr></table></figure></div>
+<ul>
+    <li>用途：用於創建 文章（Post）。</li>
+    <li>生成位置：文章會被存放在 /source/_posts/ 資料夾中。</li>
+    <ul>特點:
+        <li style="margin-left:40px;">支援分類（Categories）和標籤（Tags）。</li>
+        <li style="margin-left:40px;">自動顯示在文章列表，並支持分頁和排序。</li>
+    </ul>
+    <ul>網址結構
+        <li style="margin-left:40px;">默認網址會是 /YYYY/MM/DD/文章名稱/</li>
+    </ul>
+</ul>
+<h4 id="new_page">page 新增頁面</h4>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new page &quot;about&quot;</span><br></pre></td></tr></table></figure></div>
+<ul>
+    <li>用於創建 頁面（Page）。</li>
+    <li>生成位置：頁面會被存放在 /source/ 資料夾的根目錄或自定義資料夾中。</li>
+    <ul>特點:
+        <li style="margin-left:40px;">不會出現在文章列表，通常用於靜態頁面（如關於頁、聯絡頁等）。</li>
+        <li style="margin-left:40px;">頁面可以手動添加到導航欄，作為獨立的功能頁面。</li>
+    </ul>
+    <ul>網址結構
+        <li style="margin-left:40px;">默認網址會是 /about/</li>
+    </ul>
+</ul>
+
+<h5>差異對比</h5>
+<table>
+    <thead>
+        <tr>
+            <th>功能</th>
+            <th>hexo new post</th>
+            <th>hexo new page</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>用途</td>
+            <td>創建博客文章，支持分頁顯示</td>
+            <td>創建靜態頁面，如「關於我」</td>
+        </tr>
+        <tr>
+            <td>存放位置</td>
+            <td>/source/_posts/</td>
+            <td>/source/{頁面名稱}/index.md</td>
+        </tr>
+        <tr>
+            <td>出現在首頁</td>
+            <td>會自動顯示在文章列表中</td>
+            <td>不會顯示，需要手動添加到導航</td>
+        </tr>
+        <tr>
+            <td>支持分類/標籤</td>
+            <td>支持</td>
+            <td>不支持</td>
+        </tr>
+        <tr>
+            <td>網址格式</td>
+            <td>/YYYY/MM/DD/文章名稱/</td>
+            <td>/{頁面名稱}/</td>
+        </tr>
+    </tbody>
+</table>
+<!-- ------------------------------------------------------------------------------------- -->
 <h4 id="clean_file_cache">clean 清除靜態檔案與快取</h4>
 <div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure></div>
 
@@ -215,54 +247,6 @@ toc.js與scroll監聽事件都改了一遍，還是不起作用....，做到一�
       </tags>
   </entry>
   <entry>
-    <title>.Net資料庫連接db</title>
-    <url>/2025/01/10/NetConnectDB/</url>
-    <content><![CDATA[<h2 id="install_package">1. 安裝套件</h2>
-<strong>必要項</strong>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">Microsoft.EntityFrameworkCore.SqlServer</span><br><span class="line">Microsoft.EntityFrameworkCore.Tools</span><br></pre></td></tr></table></figure></div>
-<strong>非必要項</strong>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">Microsoft.AspNetCore.Mvc.NewtonsoftJson (解析JSON)</span><br><span class="line">AutoMapper(自動映射DTO資料型態)</span><br><span class="line">Microsoft.AspNetCore.Authentication.Google </span><br><span class="line">SixLabors.ImageSharp(提取Images格式)</span><br></pre></td></tr></table></figure></div>
-<!-- ------------------------------------------------------------------------------------- -->
-<h2 id="connect_db">2. 連接資料庫字串</h2>
-<p>到套件管理器主控台(檢視>其他視窗>套件管理器主控台)</p>
-
-<h3 id="local_certification">本地認證</h3>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">Scaffold-DbContext &quot;Server=.\SQLExpress; Database=TestProject; Integrated Security=True; TrustServerCertificate=true&quot; Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -NoOnConfiguring -UseDatabaseNames -NoPluralize -Force </span><br></pre></td></tr></table></figure></div>
-<!-- ------------------------------------------------------------------------------------- -->
-<h3 id="sql_certification">SQL認證</h3>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">Scaffold-DbContext &quot;Server=34.81.75.116;Database=Zugether;User ID=sqlserver;</span><br><span class="line">Password=qwe321;TrustServerCertificate=true&quot; Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -NoOnConfiguring -UseDatabaseNames -NoPluralize -Force</span><br></pre></td></tr></table></figure></div>
-<ul>說明參數
-    <li>Integrated Security=True: 使用 Windows 認證來連接資料庫 。</li>
-    <li>TrustServerCertificate=true: 表示允許接受未經驗證的 SSL 憑證。</li>
-    <li>Microsoft.EntityFrameworkCore.SqlServer: 生成適用於 SQL Server 的代碼。 </li>
-    <li>-OutputDir Models: 存放到名為 Models 的資料夾中。</li>
-    <li>-NoOnConfiguring: 不要生成 OnConfiguring 代碼 。</li>
-    <li>-UseDatabaseNames: 在生成類別和屬性名稱時，使用資料庫中的名稱 </li>
-    <li>-NoPluralize: 不要對生成的類別名稱進行複數化處理 +s。</li>
-    <li>-Force: 強制覆寫現有的模型。如果已經生成過模型類別，這個選項會強制覆蓋這些檔案。</li>
-</ul>
-
-<h3 id="di">Program.cs中加入資料庫物件的注入。</h3>
-<p>在var app = builder.Build(); 之前</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">builder.Services.AddDbContext&lt;WebContext&gt;(options =&gt; options.UseSqlServer(builder.Configuration.GetConnectionString(&quot;Database&quot;))); </span><br></pre></td></tr></table></figure></div>
-
-<h3 id="appsettings">appsettings.json中加入連接字串</h3>
-<p>本地</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;ConnectionStrings&quot;: &#123; &quot;Database&quot;: &quot;Server=.\\SQLExpress; Database=Zugether1;Integrated Security=True; TrustServerCertificate=true&quot; &#125;</span><br></pre></td></tr></table></figure></div>
-<p>SQL</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;ConnectionStrings&quot;: &#123; &quot;Database&quot;: &quot;Server=.\\SQLExpress;Database=Web;User ID=sa1;Password=P@ssw@rd;TrustServerCertificate=true&quot; &#125; </span><br></pre></td></tr></table></figure></div>
-<p><strong style="color:red;">"Database" : 可自訂名稱 </strong></p>
-<!-- ------------------------------------------------------------------------------------- -->
-<h2 id="controller">Controller.cs 加入以下代碼</h2>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">public class NorthwindController : ControllerBase</span><br><span class="line"> &#123;</span><br><span class="line">     //資料庫物件名稱的類別 宣告資料庫物件</span><br><span class="line">     private readonly NorthwindContext _context;</span><br><span class="line">     //建構式(Constructor)</span><br><span class="line">     //取得依賴注入物件（Dependency Injection，DI）將NorthwindContext物件注入到控制器中</span><br><span class="line">     public NorthwindController(NorthwindContext context)</span><br><span class="line">     &#123;</span><br><span class="line">         _context = context;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></div>]]></content>
-      <categories>
-        <category>整理記錄</category>
-      </categories>
-      <tags>
-        <tag>.Net</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>整理通用與redefine主題設定</title>
     <url>/2025/01/10/RedefineDescription/</url>
     <content><![CDATA[<style>
@@ -272,7 +256,7 @@ toc.js與scroll監聽事件都改了一遍，還是不起作用....，做到一�
 
     img{max-height:500px;}    
     a{color: blue;}
-
+    
     /* 覆蓋設定navbar*/
     /* redefine_navbar_hover_color --primary-color: #a31f34; */
     .navbar-item a{color:black !important;}
@@ -550,6 +534,217 @@ toc.js與scroll監聽事件都改了一遍，還是不起作用....，做到一�
       </categories>
       <tags>
         <tag>redefine</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>紀錄物件導向</title>
+    <url>/2025/01/11/OOP/oop/</url>
+    <content><![CDATA[<style>
+    a{color:blue;}
+    /* 覆蓋設定navbar*/
+    /* redefine_navbar_hover_color --primary-color: #a31f34; */
+    .navbar-item a{color:black !important;}
+    .navbar-item a:hover{color: #a31f34 !important;}
+    p{letter-spacing:2px;}
+</style>
+<p>物件導向只是一種『設計概念 (design concept)』，而不是一種程式語法</p>
+<h2 id="oop">三大特性</h2>
+<ul>
+    <li>封裝(Encapsulation)</li>
+    <li>繼承(Inheritance)</li>
+    <li>多型(Polymorphism)</li>
+</ul>
+<h3 id="Encapsulation">封裝(Encapsulation)</h3>
+<p><strong>把物件隱藏在類別裡，通過設定存取權限，只開放公開的方法讓別人可以使用，把內部實作細節隱藏，做到保護資料的目的
+</strong></p>
+<a class="link"   href="https://yubin551.gitbook.io/java-note/object_oriented_programming/encapsulation" >詳細資料<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
+
+<p>例如說"提款機"</p>
+<p>你不需要知道內部還有多少錢，也不需要知道實際運作流程，你只要插入卡片，輸入密碼即可，接著就可以透過螢幕上按鈕互動</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">class ATM&#123;</span><br><span class="line">    private int 剩餘金額;</span><br><span class="line">    private boolean 身分確認(密碼)&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;;</span><br><span class="line">    public void 提款()&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    public void 查詢餘額(密碼)&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h4 id="common">常見修飾子</h4>
+<h5>private</h5>
+<p>開放權限最低，只有同類別的成員可存取</p>
+
+<h5>public</h5>
+<p>可被所有類別存取</p>
+
+<h5>protected</h5>
+<p>可被不同package的子類別(繼承)存取</p>
+
+<h5>default</h5>
+<p>只能被同個package存取</p>
+
+<!-- ------------------------------------------------------------------------------------- -->
+<h3 id="Inheritance">繼承 (Inheritance)</h3>
+<p><strong>子類別會擁有父類別全部的成員及方法，可以再透過覆寫(override)實作專屬自己的屬性
+</strong></p>
+<a class="link"   href="https://yubin551.gitbook.io/java-note/object_oriented_programming/inheritance" >詳細資料<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
+<!-- ------------------------------------------------------------------------------------- -->
+<h3 id="Polymorphism">多型(Polymorphism)</h3>
+<p><strong>指方法名稱相同，但參數數量、資料格式、回傳值不同的方法
+</strong></p>
+<a class="link"   href="https://yubin551.gitbook.io/java-note/object_oriented_programming/polymorphism" >詳細資料<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
+
+<!-- ------------------------------------------------------------------------------------- -->
+<h3 id="Abstract">抽象(Abstract)</h3>
+<a class="link"   href="https://yubin551.gitbook.io/java-note/object_oriented_programming/abstract" >詳細資料<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
+<p>抽象可以想像成一種概念，並不存在於世界上。</p>
+<p>在『多型』的章節中，我們有一個Animal的類別，但現實生活中有這個東西嗎？ 動物只是一個概念，並沒有一種生物叫作動物。 狗、鳥、魚都是實際存在於世界上的實體，他們都是動物，現實中卻沒有一個實體叫作動物。</p>
+<p>如果聽起來卡卡的，再反覆讀幾次。 所以我們可以把動物視為一種『概念』，他是抽象的，不存在於世界上的。 而Dog、Bird、Fish都具備這個概念的特質，所以繼承Animal。</p>
+<!-- ------------------------------------------------------------------------------------- -->
+<h4 id="abstract_class">抽象類別 abstract class</h4>
+<p>利用abstract來修飾類別，可以使類別變成抽象類別，使用方法：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">abstract class 類別名稱&#123;</span><br><span class="line">    // 成員定義...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>抽象是一個概念，而不是一個存在的實體。同樣的，抽象類別不能被實體化。</p>
+<strong>可使用繼承去實作抽象類別</strong>
+<!-- ------------------------------------------------------------------------------------- -->
+<h4 id="abstract_method">抽象方法 abstract method</h4>
+<p>利用abstract，可以使方法變成抽象方法，抽象方法只能寫方法的原型，無法定義方法的本體(不能有{})。</p>
+
+<p>使用格式：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">abstract &lt;修飾子&gt; 回傳型態 方法名稱(&lt;參數...&gt;);</span><br></pre></td></tr></table></figure></div>
+<p>範例：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">abstract void eat();</span><br></pre></td></tr></table></figure></div>
+<p>錯誤範例：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">abstract void eat()&#123;    // 編譯錯誤：Abstract methods do not specify a body</span><br><span class="line">    // 不管有沒有寫東西，都編譯錯誤，抽象方法不能定義方法本體</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<ul>注意事項
+    <li>抽象方法只能定義在抽象類別中。 (否則會編譯錯誤)</li>
+    <li>繼承抽象的類別必須實作(override)全部抽象方法。 (否則會編譯錯誤)</li>
+</ul>
+<p>如果子類別沒有實作抽象方法，則子類別必須定義為抽象類別。</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">class Cat extends Animal &#123;</span><br><span class="line">    // 沒有實作 eat() 方法，會導致編譯錯誤</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>將 Cat 定義為抽象類別，則不需要實作 eat()</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">abstract class Cat extends Animal &#123;</span><br><span class="line">    // 不需要實作 eat()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<!-- ------------------------------------------------------------------------------------- -->
+<h3 id="Interface">介面(Interface)</h3>
+<a class="link"   href="https://yubin551.gitbook.io/java-note/object_oriented_programming/interface" >詳細資料<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
+<p>假設電器設備指的是可以從台灣電力公司取得需要的電源。</p>
+<p>冰箱跟烤箱都可以接受台灣電力公司的電源，這兩個東西都可以視為電器設備，但這兩個東西在繼承關係上可說是相差很遠的。</p>
+<p>所以我們可以說，冰箱跟烤箱擁有相同的『 行為 』，在這裡指的就是接受並運用這個110/220伏特的交流電。</p>
+<h5>介面，描述不同類別的共通行為。</h5>
+
+<p>例如：</p>
+<p>物件 -> 冷藏設備 -> 冰箱。</p>
+<p>物件 -> 加熱設備 -> 烤箱。</p>
+<p>由於<strong>Java不允許多重繼承</strong>(任何類別只能有一個父類別)，所以沒辦法讓冰箱既是冷藏設備又是電器設備。</p>
+<!-- ------------------------------------------------------------------------------------- -->
+<h5>無法多重繼承：</h5>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">class 冰箱 extends 冷藏設備,電器設備&#123;  // 編譯錯誤，不允許多重繼承</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>從現實中來看，冰箱跟烤箱只有 『 使用台電提供的電 』 這個共通的行為，因此我們把電器設備定義為介面，如此一來冰箱跟烤箱都可以『 實作 』這個介面，從而具有這個介面的特性，台電也很清楚的知道只要送出的電可以讓『 電器設備 』這個介面使用就好，任何需要電的設備只要符合這個介面制訂的規則，就可以獲得電力。</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">class 冰箱 extends 冷藏設備 implements 電氣設備&#123; // 繼承冷藏設備，實作電器設備這個介面</span><br><span class="line">    // 成員宣告</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>如此一來，冰箱就可以視為電器設備，當作電器設備來使用。</p>]]></content>
+      <categories>
+        <category>整理記錄</category>
+      </categories>
+      <tags>
+        <tag>oop</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>整理有關哈希密碼與ILogger相關程式</title>
+    <url>/2025/01/10/net/HashPassword/</url>
+    <content><![CDATA[<h2 id="create_obj">先建立PasswordHasher物件</h2>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">private readonly PasswordHasher&lt;memberTable&gt; _passwordHasher;</span><br><span class="line">private readonly ILogger&lt;RegisterAndLoginController&gt; _logger;</span><br><span class="line">//注入控制器</span><br><span class="line">public RegisterAndLoginController(CitybreakContext context, ILogger&lt;當前的Controller&gt; logger)</span><br><span class="line">&#123;</span><br><span class="line">	_context = context;</span><br><span class="line">	_passwordHasher = new PasswordHasher&lt;memberTable&gt;();</span><br><span class="line">	_logger = logger;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h2 id="register">註冊</h2>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">memberData.password = _passwordHasher.HashPassword(memberTable user, string password);</span><br></pre></td></tr></table></figure></div>
+<ul>
+    <li>memberData.password: 自訂資料表物件.欄位</li>
+    <li>_passwordHasher: 物件</li>
+    <li>.HashPassword: 方法名稱，負責加密</li>
+    <li>第一個參數: 傳入資料表物件，比如根據用戶的某些屬性進一步自定義加密邏輯。在這邊可以使用null
+    ，表示直接對傳入的密碼進行加密</li>
+    <li>第二個參數: 需要加密的字串</li>
+</ul>
+
+<h2 id="login">登入</h2>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">//比對密碼</span><br><span class="line">PasswordVerificationResult result = _passwordHasher.VerifyHashedPassword</span><br><span class="line">        (member, member.password, value.password);</span><br><span class="line">//接受三個參數：用戶實體、存儲的哈希密碼和用戶輸入的密碼</span><br><span class="line">if (result == PasswordVerificationResult.Success)</span><br></pre></td></tr></table></figure></div>
+<h4>PasswordVerificationResult</h4>
+<ul>這是 Microsoft.AspNetCore.Identity 提供的一個型別，表示密碼驗證的結果
+    <li>Success：驗證成功，密碼正確。</li>
+    <li>Failed：驗證失敗，密碼不正確。</li>
+    <li>SuccessRehashNeeded：密碼驗證成功，但需要重新哈希密碼（例如，哈希算法升級或安全策略改變）。</li>
+</ul>
+
+<h4>VerifyHashedPassword</h4>
+<ul>主要是比對已儲存的哈希密碼與用戶輸入的原始密碼。
+    <li>memberTable user: 用戶物件</li>
+    <li>hashedPassword: 資料庫中儲存的經過哈希的密碼。</li>
+    <li>providedPassword: 用戶輸入的密碼</li>
+</ul>
+
+]]></content>
+      <categories>
+        <category>整理記錄</category>
+      </categories>
+      <tags>
+        <tag>hash</tag>
+        <tag>.Net</tag>
+        <tag>ILogger</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>紀錄MVC、API註冊登入會員</title>
+    <url>/2025/01/13/net/MemberProgram/</url>
+    <content><![CDATA[<h2 id="MVC">MVC程式</h2>
+<h3 id="MVC_fronted">前端表單</h3>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure></div>
+]]></content>
+      <categories>
+        <category>整理記錄</category>
+      </categories>
+      <tags>
+        <tag>Net</tag>
+        <tag>MVC</tag>
+        <tag>API</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>.Net資料庫連接db</title>
+    <url>/2025/01/10/net/NetConnectDB/</url>
+    <content><![CDATA[<h2 id="install_package">1. 安裝套件</h2>
+<strong>必要項</strong>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">Microsoft.EntityFrameworkCore.SqlServer</span><br><span class="line">Microsoft.EntityFrameworkCore.Tools</span><br></pre></td></tr></table></figure></div>
+<strong>非必要項</strong>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">Microsoft.AspNetCore.Mvc.NewtonsoftJson (解析JSON)</span><br><span class="line">AutoMapper(自動映射DTO資料型態)</span><br><span class="line">Microsoft.AspNetCore.Authentication.Google </span><br><span class="line">SixLabors.ImageSharp(提取Images格式)</span><br></pre></td></tr></table></figure></div>
+<!-- ------------------------------------------------------------------------------------- -->
+<h2 id="connect_db">2. 連接資料庫字串</h2>
+<p>到套件管理器主控台(檢視>其他視窗>套件管理器主控台)</p>
+
+<h3 id="local_certification">本地認證</h3>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">Scaffold-DbContext &quot;Server=.\SQLExpress; Database=TestProject; Integrated Security=True; TrustServerCertificate=true&quot; Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -NoOnConfiguring -UseDatabaseNames -NoPluralize -Force </span><br></pre></td></tr></table></figure></div>
+<!-- ------------------------------------------------------------------------------------- -->
+<h3 id="sql_certification">SQL認證</h3>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">Scaffold-DbContext &quot;Server=34.81.75.116;Database=Zugether;User ID=sqlserver;</span><br><span class="line">Password=qwe321;TrustServerCertificate=true&quot; Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -NoOnConfiguring -UseDatabaseNames -NoPluralize -Force</span><br></pre></td></tr></table></figure></div>
+<ul>說明參數
+    <li>Integrated Security=True: 使用 Windows 認證來連接資料庫 。</li>
+    <li>TrustServerCertificate=true: 表示允許接受未經驗證的 SSL 憑證。</li>
+    <li>Microsoft.EntityFrameworkCore.SqlServer: 生成適用於 SQL Server 的代碼。 </li>
+    <li>-OutputDir Models: 存放到名為 Models 的資料夾中。</li>
+    <li>-NoOnConfiguring: 不要生成 OnConfiguring 代碼 。</li>
+    <li>-UseDatabaseNames: 在生成類別和屬性名稱時，使用資料庫中的名稱 </li>
+    <li>-NoPluralize: 不要對生成的類別名稱進行複數化處理 +s。</li>
+    <li>-Force: 強制覆寫現有的模型。如果已經生成過模型類別，這個選項會強制覆蓋這些檔案。</li>
+</ul>
+
+<h3 id="di">Program.cs中加入資料庫物件的注入。</h3>
+<p>在var app = builder.Build(); 之前</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">builder.Services.AddDbContext&lt;WebContext&gt;(options =&gt; options.UseSqlServer(builder.Configuration.GetConnectionString(&quot;Database&quot;))); </span><br></pre></td></tr></table></figure></div>
+
+<h3 id="appsettings">appsettings.json中加入連接字串</h3>
+<p>本地</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;ConnectionStrings&quot;: &#123; &quot;Database&quot;: &quot;Server=.\\SQLExpress; Database=Zugether1;Integrated Security=True; TrustServerCertificate=true&quot; &#125;</span><br></pre></td></tr></table></figure></div>
+<p>SQL</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;ConnectionStrings&quot;: &#123; &quot;Database&quot;: &quot;Server=.\\SQLExpress;Database=Web;User ID=sa1;Password=P@ssw@rd;TrustServerCertificate=true&quot; &#125; </span><br></pre></td></tr></table></figure></div>
+<p><strong style="color:red;">"Database" : 可自訂名稱 </strong></p>
+<!-- ------------------------------------------------------------------------------------- -->
+<h2 id="controller">Controller.cs 加入以下代碼</h2>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">public class NorthwindController : ControllerBase</span><br><span class="line"> &#123;</span><br><span class="line">     //資料庫物件名稱的類別 宣告資料庫物件</span><br><span class="line">     private readonly NorthwindContext _context;</span><br><span class="line">     //建構式(Constructor)</span><br><span class="line">     //取得依賴注入物件（Dependency Injection，DI）將NorthwindContext物件注入到控制器中</span><br><span class="line">     public NorthwindController(NorthwindContext context)</span><br><span class="line">     &#123;</span><br><span class="line">         _context = context;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></div>]]></content>
+      <categories>
+        <category>整理記錄</category>
+      </categories>
+      <tags>
+        <tag>.Net</tag>
       </tags>
   </entry>
 </search>

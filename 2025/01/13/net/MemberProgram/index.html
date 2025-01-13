@@ -13,7 +13,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://ting-s515.github.io/2025/01/10/hashpassword/"/>
+    <link rel="canonical" href="https://ting-s515.github.io/2025/01/13/net/memberprogram/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -23,18 +23,18 @@
         
         <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="整理有關哈希密碼與ILogger相關程式">
-<meta property="og:url" content="https://ting-s515.github.io/2025/01/10/HashPassword/index.html">
+<meta property="og:title" content="紀錄MVC、API註冊登入會員">
+<meta property="og:url" content="https://ting-s515.github.io/2025/01/13/net/MemberProgram/index.html">
 <meta property="og:site_name" content="Ting&#39;s Blog">
 <meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://ting-s515.github.io/images/redefine-og.webp">
-<meta property="article:published_time" content="2025-01-10T12:16:52.000Z">
-<meta property="article:modified_time" content="2025-01-10T13:58:26.077Z">
+<meta property="article:published_time" content="2025-01-13T04:02:31.000Z">
+<meta property="article:modified_time" content="2025-01-13T04:56:38.282Z">
 <meta property="article:author" content="Ting">
-<meta property="article:tag" content="hash">
-<meta property="article:tag" content=".Net">
-<meta property="article:tag" content="ILogger">
+<meta property="article:tag" content="Net">
+<meta property="article:tag" content="MVC">
+<meta property="article:tag" content="API">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://ting-s515.github.io/images/redefine-og.webp">
     
@@ -48,7 +48,7 @@
     
     <title>
         
-            整理有關哈希密碼與ILogger相關程式 | Ting&#39;s blog
+            紀錄MVC、API註冊登入會員 | Ting&#39;s blog
         
     </title>
 
@@ -289,7 +289,7 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">6</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">10</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -297,7 +297,7 @@
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">4</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">6</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -320,7 +320,7 @@
 		<div class="article-title relative w-full">
 			
 			<div class="w-full flex items-center pt-6 justify-start">
-				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">整理有關哈希密碼與ILogger相關程式</h1>
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">紀錄MVC、API註冊登入會員</h1>
 			</div>
 			
 		</div>
@@ -339,15 +339,15 @@
 					<div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="desktop">2025-01-10 20:16:52</span>
-        <span class="mobile">2025-01-10 20:16:52</span>
+        <span class="desktop">2025-01-13 12:02:31</span>
+        <span class="mobile">2025-01-13 12:02:31</span>
         <span class="hover-info">Created</span>
     </span>
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-01-10 21:58:26</span>
-            <span class="mobile">2025-01-10 21:58:26</span>
+            <span class="desktop">2025-01-13 12:56:38</span>
+            <span class="mobile">2025-01-13 12:56:38</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -375,15 +375,15 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/hash/">hash</a>&nbsp;
+                        <a href="/tags/Net/">Net</a>&nbsp;
                     </li>
                 
                     <li>
-                        | <a href="/tags/Net/">.Net</a>&nbsp;
+                        | <a href="/tags/MVC/">MVC</a>&nbsp;
                     </li>
                 
                     <li>
-                        | <a href="/tags/ILogger/">ILogger</a>&nbsp;
+                        | <a href="/tags/API/">API</a>&nbsp;
                     </li>
                 
             </ul>
@@ -405,36 +405,9 @@
 
 
 		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-			<h2 id="create_obj">先建立PasswordHasher物件</h2>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">private readonly PasswordHasher&lt;memberTable&gt; _passwordHasher;</span><br><span class="line">private readonly ILogger&lt;RegisterAndLoginController&gt; _logger;</span><br><span class="line">//注入控制器</span><br><span class="line">public RegisterAndLoginController(CitybreakContext context, ILogger&lt;當前的Controller&gt; logger)</span><br><span class="line">&#123;</span><br><span class="line">	_context = context;</span><br><span class="line">	_passwordHasher = new PasswordHasher&lt;memberTable&gt;();</span><br><span class="line">	_logger = logger;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-<h2 id="register">註冊</h2>
-<p>語法說明</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">memberData.password = _passwordHasher.HashPassword(memberTable user, string password);</span><br></pre></td></tr></table></figure></div>
-<ul>
-    <li>memberData.password: 自訂資料表物件.欄位</li>
-    <li>_passwordHasher: 物件</li>
-    <li>.HashPassword: 方法名稱，負責加密</li>
-    <li>第一個參數: 傳入資料表物件，比如根據用戶的某些屬性進一步自定義加密邏輯。在這邊可以使用null
-    ，表示直接對傳入的密碼進行加密</li>
-    <li>第二個參數: 需要加密的字串</li>
-</ul>
-
-<h2 id="login">登入</h2>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//比對密碼</span><br><span class="line">PasswordVerificationResult result = _passwordHasher.VerifyHashedPassword</span><br><span class="line">        (member, member.password, value.password);</span><br><span class="line">//接受三個參數：用戶實體、存儲的哈希密碼和用戶輸入的密碼</span><br><span class="line">if (result == PasswordVerificationResult.Success)</span><br></pre></td></tr></table></figure></div>
-<h4>PasswordVerificationResult</h4>
-<ul>這是 Microsoft.AspNetCore.Identity 提供的一個型別，表示密碼驗證的結果
-    <li>Success：驗證成功，密碼正確。</li>
-    <li>Failed：驗證失敗，密碼不正確。</li>
-    <li>SuccessRehashNeeded：密碼驗證成功，但需要重新哈希密碼（例如，哈希算法升級或安全策略改變）。</li>
-</ul>
-
-<h4>VerifyHashedPassword</h4>
-<ul>主要是比對已儲存的哈希密碼與用戶輸入的原始密碼。
-    <li>memberTable user: 用戶物件</li>
-    <li>hashedPassword: 資料庫中儲存的經過哈希的密碼。</li>
-    <li>providedPassword: 用戶輸入的密碼</li>
-</ul>
-
+			<h2 id="MVC">MVC程式</h2>
+<h3 id="MVC_fronted">前端表單</h3>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure></div>
 
 		</div>
 
@@ -444,15 +417,15 @@
 		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
 			
 			<li class="tag-item mx-0.5">
-				<a href="/tags/hash/">#hash</a>&nbsp;
+				<a href="/tags/Net/">#Net</a>&nbsp;
 			</li>
 			
 			<li class="tag-item mx-0.5">
-				<a href="/tags/Net/">#.Net</a>&nbsp;
+				<a href="/tags/MVC/">#MVC</a>&nbsp;
 			</li>
 			
 			<li class="tag-item mx-0.5">
-				<a href="/tags/ILogger/">#ILogger</a>&nbsp;
+				<a href="/tags/API/">#API</a>&nbsp;
 			</li>
 			
 		</ul>
@@ -465,9 +438,9 @@
 			
 			
 			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
-				<a class="next" rel="next" href="/2025/01/10/NetConnectDB/">
+				<a class="next" rel="next" href="/2025/01/11/OOP/oop/">
 					<span class="title flex justify-center items-center">
-						<span class="post-nav-title-item">.Net資料庫連接db</span>
+						<span class="post-nav-title-item">紀錄物件導向</span>
 						<span class="post-nav-item">Next posts</span>
 					</span>
 					<span class="right arrow-icon flex justify-center items-center">
@@ -531,8 +504,8 @@
 		<div class="post-toc-wrap">
 	<div class="post-toc">
 		<div class="toc-title">On this page</div>
-		<div class="page-title">整理有關哈希密碼與ILogger相關程式</div>
-		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#create_obj"><span class="nav-text">先建立PasswordHasher物件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#register"><span class="nav-text">註冊</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#login"><span class="nav-text">登入</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-text">PasswordVerificationResult</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-text">VerifyHashedPassword</span></a></li></ol></li></ol></li></ol>
+		<div class="page-title">紀錄MVC、API註冊登入會員</div>
+		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MVC"><span class="nav-text">MVC程式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MVC_fronted"><span class="nav-text">前端表單</span></a></li></ol></li></ol>
 
 	</div>
 </div>
@@ -559,7 +532,7 @@
                 
                 <p class="post-count space-x-0.5">
                     <span>
-                        4 posts in total
+                        6 posts in total
                     </span>
                     
                 </p>
