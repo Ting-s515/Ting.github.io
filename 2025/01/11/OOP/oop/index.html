@@ -30,7 +30,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://ting-s515.github.io/images/redefine-og.webp">
 <meta property="article:published_time" content="2025-01-11T10:48:17.000Z">
-<meta property="article:modified_time" content="2025-01-13T04:29:44.738Z">
+<meta property="article:modified_time" content="2025-01-13T14:13:14.788Z">
 <meta property="article:author" content="Ting">
 <meta property="article:tag" content="oop">
 <meta name="twitter:card" content="summary">
@@ -287,7 +287,7 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">10</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -344,8 +344,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-01-13 12:29:44</span>
-            <span class="mobile">2025-01-13 12:29:44</span>
+            <span class="desktop">2025-01-13 22:13:14</span>
+            <span class="mobile">2025-01-13 22:13:14</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -409,6 +409,8 @@
     <li>封裝(Encapsulation)</li>
     <li>繼承(Inheritance)</li>
     <li>多型(Polymorphism)</li>
+    <li style="margin-left:40px;">多載(Overload)</li>
+    <li style="margin-left:40px;">覆寫(Override)</li>
 </ul>
 <h3 id="Encapsulation">封裝(Encapsulation)</h3>
 <p><strong>把物件隱藏在類別裡，通過設定存取權限，只開放公開的方法讓別人可以使用，把內部實作細節隱藏，做到保護資料的目的
@@ -438,9 +440,20 @@
 <a class="link"   target="_blank" rel="noopener" href="https://yubin551.gitbook.io/java-note/object_oriented_programming/inheritance" >詳細資料<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
 <!-- ------------------------------------------------------------------------------------- -->
 <h3 id="Polymorphism">多型(Polymorphism)</h3>
-<p><strong>指方法名稱相同，但參數數量、資料格式、回傳值不同的方法
+<a class="link"   target="_blank" rel="noopener" href="https://yubin551.gitbook.io/java-note/object_oriented_programming/polymorphism" >Java備忘筆記<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
+<a class="link"   target="_blank" rel="noopener" href="https://matthung0807.blogspot.com/2018/02/java-overload.html" >肉豬工程師<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
+<p><strong>指父類別可透過子類別衍伸成多種型態，而父類別為子類別的通用型態，再透過子類別可覆寫父類別的方法來達到多型的效果，也就是同樣的方法名稱會有多種行為。
 </strong></p>
-<a class="link"   target="_blank" rel="noopener" href="https://yubin551.gitbook.io/java-note/object_oriented_programming/polymorphism" >詳細資料<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">public class Main &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        // Animal為Dog及Bird的通用型態</span><br><span class="line">        Animal dog = new Dog();   // 子類別Dog物件分派至Animal型別變數dog</span><br><span class="line">        Animal bird = new Bird(); // 子類別Bird物件分派至Animal型別變數bird</span><br><span class="line">        act(dog);  // run</span><br><span class="line">        act(bird); // fly</span><br><span class="line">    &#125;</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">    private static void act(Animal animal) &#123; // 因為多型，所以參數以通用的父類別傳入</span><br><span class="line">        animal.move(); // 因為多型及覆寫，所以實際執行的方法為子類別的方法內容</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">class Animal &#123;</span><br><span class="line">    public void move() &#123;</span><br><span class="line">        System.out.println(&quot;move&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">class Dog extends Animal &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void move() &#123;</span><br><span class="line">        System.out.println(&quot;run&quot;); // 覆寫父類別Animal.move()的內容</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">class Bird extends Animal &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void move() &#123;</span><br><span class="line">        System.out.println(&quot;fly&quot;); // 覆寫父類別Animal.move()的內容</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h4 id="overload">多載(Overload)</h4>
+<p><strong>指在一個類別(class)中，定義多個名稱相同，但參數(Parameter)不同的方法(Method)。</strong></p>
+<p>例如Java String的indexOf(...)即為多載的例子。</p>
+<p>以indexOf為名稱的方法分別為:</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public int indexOf(int ch)</span><br><span class="line">public int indexOf(int ch, int fromIndex)</span><br><span class="line">public int indexOf(String str)</span><br><span class="line">public int indexOf(String str, int fromIndex)</span><br></pre></td></tr></table></figure></div>
+<p>所以只要方法的參數型態或數目不同，則允許多個相同名稱的方法存在。但要注意多載並不包含回傳型態不同，也就是如果方法的名稱相同，參數型態及數目相同，而只有回傳型態不同，仍有命名衝突的錯誤。例如下面範例的public String hello()即與public void hello()發生命名衝突。</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public interface HelloWorld &#123;</span><br><span class="line">    void hello(); // 與最下面的 String hello() 衝突</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">    void hello(int i);</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">    void hello(int i, int j) ;</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">    void hello(int i, String s);</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">    void hello(String s) ;</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">    String hello();  // 回傳型態不同並無多載，與最上面的 void hello() 衝突</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h4 id="override">覆寫(Override)</h4>
+<p>通常用於繼承子類別，指子類別可以覆寫父類別的方法內容，使該方法擁有不同於父類別的行為。</p>
 
 <!-- ------------------------------------------------------------------------------------- -->
 <h3 id="Abstract">抽象(Abstract)</h3>
@@ -466,7 +479,7 @@
 <div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">abstract void eat()&#123;    // 編譯錯誤：Abstract methods do not specify a body</span><br><span class="line">    // 不管有沒有寫東西，都編譯錯誤，抽象方法不能定義方法本體</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 <ul>注意事項
     <li>抽象方法只能定義在抽象類別中。 (否則會編譯錯誤)</li>
-    <li>繼承抽象的類別必須實作(override)全部抽象方法。 (否則會編譯錯誤)</li>
+    <li>繼承抽象類別的類別必須實作(override)全部抽象方法。 (否則會編譯錯誤)</li>
 </ul>
 <p>如果子類別沒有實作抽象方法，則子類別必須定義為抽象類別。</p>
 <div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class Cat extends Animal &#123;</span><br><span class="line">    // 沒有實作 eat() 方法，會導致編譯錯誤</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
@@ -475,10 +488,10 @@
 <!-- ------------------------------------------------------------------------------------- -->
 <h3 id="Interface">介面(Interface)</h3>
 <a class="link"   target="_blank" rel="noopener" href="https://yubin551.gitbook.io/java-note/object_oriented_programming/interface" >詳細資料<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
+<h5>介面，描述不同類別的共通行為。</h5> 
 <p>假設電器設備指的是可以從台灣電力公司取得需要的電源。</p>
 <p>冰箱跟烤箱都可以接受台灣電力公司的電源，這兩個東西都可以視為電器設備，但這兩個東西在繼承關係上可說是相差很遠的。</p>
 <p>所以我們可以說，冰箱跟烤箱擁有相同的『 行為 』，在這裡指的就是接受並運用這個110/220伏特的交流電。</p>
-<h5>介面，描述不同類別的共通行為。</h5>
 
 <p>例如：</p>
 <p>物件 -> 冷藏設備 -> 冰箱。</p>
@@ -490,6 +503,25 @@
 <p>從現實中來看，冰箱跟烤箱只有 『 使用台電提供的電 』 這個共通的行為，因此我們把電器設備定義為介面，如此一來冰箱跟烤箱都可以『 實作 』這個介面，從而具有這個介面的特性，台電也很清楚的知道只要送出的電可以讓『 電器設備 』這個介面使用就好，任何需要電的設備只要符合這個介面制訂的規則，就可以獲得電力。</p>
 <div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class 冰箱 extends 冷藏設備 implements 電氣設備&#123; // 繼承冷藏設備，實作電器設備這個介面</span><br><span class="line">    // 成員宣告</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 <p>如此一來，冰箱就可以視為電器設備，當作電器設備來使用。</p>
+<!-- ------------------------------------------------------------------------------------- -->
+<h4 id="abstract_implements_interface">抽象類別實作介面的特性</h4>
+<ul>1. 抽象類別可以選擇實作介面的方法：
+    <li style="margin-left:40px;">抽象類別在實作介面時，可以選擇完全實作介面中的方法，也可以不實作，或者部分實作。</li>
+    <li style="margin-left:40px;">如果抽象類別中沒有實作某些介面的方法，那麼子類別必須實作這些方法。</li>
+</ul>
+<p>下面有範例: </p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">interface A&#123;</span><br><span class="line">    void a();</span><br><span class="line">    void b();</span><br><span class="line">&#125;</span><br><span class="line">abstract class AbsClass implements A&#123;</span><br><span class="line">    public void b()&#123;</span><br><span class="line">        System.out.println(&quot;hello b~&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    abstract void c();</span><br><span class="line">&#125;</span><br><span class="line">class MyClass extends AbsClass&#123;  </span><br><span class="line">    public void a() &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    // 方法b()已經在AbsClass實作，MyClass不需要再實作，當然也可以再覆寫b()</span><br><span class="line">    public void c() &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<ul>2. 抽象類別的目的：
+    <li style="margin-left:40px;">抽象類別通常用於定義共同的基底行為（部分實作）或邏輯，並讓子類別繼承和擴展。</li>
+</ul>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">public interface Socket</span><br><span class="line">&#123;</span><br><span class="line">    void connect(string str);</span><br><span class="line">&#125;</span><br><span class="line">//抽象類別實作介面</span><br><span class="line">abstract class v110 : Socket</span><br><span class="line">&#123;</span><br><span class="line">    public void connect(string str)</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(str + &quot;is 110v&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">abstract class v220 : Socket</span><br><span class="line">&#123;</span><br><span class="line">    public void connect(string str)</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(str + &quot;is 220v&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">class Refrigerator : v110</span><br><span class="line">&#123;</span><br><span class="line">    private string str = &quot;&quot;;</span><br><span class="line">    public void refrigeration(string str)</span><br><span class="line">    &#123;</span><br><span class="line">        this.str = str;</span><br><span class="line">        connect(str);</span><br><span class="line">        System.Console.WriteLine(str + &quot;開始冷藏&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">class AirConditioning : v220</span><br><span class="line">&#123;</span><br><span class="line">    private string str = &quot;&quot;;</span><br><span class="line">    public void Operation(string str)</span><br><span class="line">    &#123;</span><br><span class="line">        this.str = str;</span><br><span class="line">        connect(str);</span><br><span class="line">        System.Console.WriteLine(str + &quot;運作中...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p><strong>原則就是，非抽象類別要實作所有未定義的方法。</strong></p>
+<!-- ------------------------------------------------------------------------------------- -->
+<h4 id="interface_method">實作介面方法必須為公開(public)</h4>
+<ul>介面的設計規則：
+    <li style="margin-left:40px;">當一個類別或抽象類別實作介面時，這些方法的存取修飾符必須至少符合介面的可見性要求，也就是 public</li>
+</ul>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">abstract class v110 : Socket</span><br><span class="line">&#123;</span><br><span class="line">    // 錯誤：介面成員必須是 public</span><br><span class="line">    protected void connect(string str)</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(str + &quot; is 110v&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 		</div>
 
 		
@@ -510,12 +542,12 @@
 		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
 			
 			<div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
-				<a class="prev" rel="prev" href="/2025/01/13/net/MemberProgram/">
+				<a class="prev" rel="prev" href="/2025/01/14/Ngrok/">
 					<span class="left arrow-icon flex justify-center items-center">
 						<i class="fa-solid fa-chevron-left"></i>
 					</span>
 					<span class="title flex justify-center items-center">
-						<span class="post-nav-title-item">紀錄MVC、API註冊登入會員</span>
+						<span class="post-nav-title-item">Ngrok說明</span>
 						<span class="post-nav-item">Prev posts</span>
 					</span>
 				</a>
@@ -590,7 +622,7 @@
 	<div class="post-toc">
 		<div class="toc-title">On this page</div>
 		<div class="page-title">紀錄物件導向</div>
-		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#oop"><span class="nav-text">三大特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Encapsulation"><span class="nav-text">封裝(Encapsulation)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#common"><span class="nav-text">常見修飾子</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Inheritance"><span class="nav-text">繼承 (Inheritance)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Polymorphism"><span class="nav-text">多型(Polymorphism)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Abstract"><span class="nav-text">抽象(Abstract)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#abstract_class"><span class="nav-text">抽象類別 abstract class</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#abstract_method"><span class="nav-text">抽象方法 abstract method</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Interface"><span class="nav-text">介面(Interface)</span></a></li></ol></li></ol>
+		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#oop"><span class="nav-text">三大特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Encapsulation"><span class="nav-text">封裝(Encapsulation)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#common"><span class="nav-text">常見修飾子</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Inheritance"><span class="nav-text">繼承 (Inheritance)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Polymorphism"><span class="nav-text">多型(Polymorphism)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#overload"><span class="nav-text">多載(Overload)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#override"><span class="nav-text">覆寫(Override)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Abstract"><span class="nav-text">抽象(Abstract)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#abstract_class"><span class="nav-text">抽象類別 abstract class</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#abstract_method"><span class="nav-text">抽象方法 abstract method</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Interface"><span class="nav-text">介面(Interface)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#abstract_implements_interface"><span class="nav-text">抽象類別實作介面的特性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#interface_method"><span class="nav-text">實作介面方法必須為公開(public)</span></a></li></ol></li></ol></li></ol>
 
 	</div>
 </div>
