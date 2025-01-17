@@ -301,20 +301,6 @@ toc.js與scroll監聽事件都改了一遍，還是不起作用....，做到一�
       </tags>
   </entry>
   <entry>
-    <title>SQL語法紀錄</title>
-    <url>/2025/01/15/SQL/SQL/</url>
-    <content><![CDATA[<p>Member</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE DATABASE TestProject</span><br><span class="line">on primary </span><br><span class="line">(NAME=TestProject,FILENAME=&#x27;C:\SQLBackup\練習專案\TestProject.MDF&#x27;,</span><br><span class="line">SIZE=10MB,FILEGROWTH =10MB,MAXSIZE=100MB)</span><br><span class="line">LOG ON(NAME=TestProject_LOG,FILENAME=&#x27;C:\SQLBackup\練習專案\TestProject.LDF&#x27;,</span><br><span class="line">SIZE=10MB,FILEGROWTH =10MB,MAXSIZE=100MB)</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">create table Member</span><br><span class="line">(member_id smallint identity(1,1) primary key,</span><br><span class="line">email varchar(50) not null constraint uq_email unique(email),</span><br><span class="line">[password] varchar(max) not null,</span><br><span class="line">name nvarchar(20) not null,</span><br><span class="line">phone nchar(10),</span><br><span class="line">created_time date default getDate()</span><br><span class="line">)</span><br></pre></td></tr></table></figure></div>
-<p>Message(trigger)</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE TABLE Message</span><br><span class="line">(message_id SMALLINT IDENTITY(1,1) PRIMARY KEY,</span><br><span class="line">message_board_id SMALLINT NOT NULL CONSTRAINT Message_FK_message_board_id</span><br><span class="line">FOREIGN KEY (message_board_id) REFERENCES Message_Board(message_board_id),</span><br><span class="line">reply_member_content NVARCHAR(50),</span><br><span class="line">message_content NVARCHAR(200) NOT NULL,</span><br><span class="line">member_id SMALLINT CONSTRAINT Message_FK_member_id</span><br><span class="line">FOREIGN KEY (member_id) REFERENCES Member(member_id),</span><br><span class="line">reply_member_id SMALLINT CONSTRAINT Message_FK_reply_member_id</span><br><span class="line">FOREIGN KEY (reply_member_id) REFERENCES Member(member_id),</span><br><span class="line">post_time VARCHAR(50) NOT null,</span><br><span class="line">message_basement TINYINT </span><br><span class="line">)</span><br><span class="line">GO</span><br><span class="line">--留言樓層trigger</span><br><span class="line">CREATE TRIGGER SetMessageBasement</span><br><span class="line">ON Message</span><br><span class="line">AFTER INSERT</span><br><span class="line">AS</span><br><span class="line">BEGIN</span><br><span class="line">    DECLARE @message_board_id smallint</span><br><span class="line">    DECLARE @new_basement tinyint</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">    --  INSERTED存放剛插入的記錄=&gt;@message_board_id設置為新增的數字</span><br><span class="line">    SELECT @message_board_id = message_board_id FROM INSERTED</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">    -- 找出個別message_board_id最大的message_basement</span><br><span class="line">    SELECT @new_basement = ISNULL(MAX(message_basement), 0) + 1</span><br><span class="line">    FROM Message</span><br><span class="line">    WHERE message_board_id = @message_board_id</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">    -- 更新message_basement</span><br><span class="line">    UPDATE Message</span><br><span class="line">    SET message_basement = @new_basement</span><br><span class="line">    WHERE message_id IN (SELECT message_id FROM INSERTED)</span><br><span class="line">END	</span><br><span class="line">GO</span><br></pre></td></tr></table></figure></div>]]></content>
-      <categories>
-        <category>整理記錄</category>
-      </categories>
-      <tags>
-        <tag>sql</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>整理通用與redefine主題設定</title>
     <url>/2025/01/10/RedefineDescription/</url>
     <content><![CDATA[<style>
@@ -615,6 +601,7 @@ toc.js與scroll監聽事件都改了一遍，還是不起作用....，做到一�
     .navbar-item a:hover{color: #a31f34 !important;}
     p{letter-spacing:2px;}
 </style>
+<p>把真實世界的事物抽象化為物件。以物件為主體，透過物件方法與其他物件進行互動</p>
 <p>物件導向只是一種『設計概念 (design concept)』，而不是一種程式語法</p>
 <h2 id="oop">三大特性</h2>
 <ul>
@@ -654,9 +641,9 @@ toc.js與scroll監聽事件都改了一遍，還是不起作用....，做到一�
 <h3 id="Polymorphism">多型(Polymorphism)</h3>
 <a class="link"   href="https://yubin551.gitbook.io/java-note/object_oriented_programming/polymorphism" >Java備忘筆記<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
 <a class="link"   href="https://matthung0807.blogspot.com/2018/02/java-overload.html" >肉豬工程師<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
-<p><strong>指父類別可透過子類別衍伸成多種型態，而父類別為子類別的通用型態，再透過子類別可覆寫父類別的方法來達到多型的效果，也就是同樣的方法名稱會有多種行為。
-</strong></p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">public class Main &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        // Animal為Dog及Bird的通用型態</span><br><span class="line">        Animal dog = new Dog();   // 子類別Dog物件分派至Animal型別變數dog</span><br><span class="line">        Animal bird = new Bird(); // 子類別Bird物件分派至Animal型別變數bird</span><br><span class="line">        act(dog);  // run</span><br><span class="line">        act(bird); // fly</span><br><span class="line">    &#125;</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">    private static void act(Animal animal) &#123; // 因為多型，所以參數以通用的父類別傳入</span><br><span class="line">        animal.move(); // 因為多型及覆寫，所以實際執行的方法為子類別的方法內容</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">class Animal &#123;</span><br><span class="line">    public void move() &#123;</span><br><span class="line">        System.out.println(&quot;move&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">class Dog extends Animal &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void move() &#123;</span><br><span class="line">        System.out.println(&quot;run&quot;); // 覆寫父類別Animal.move()的內容</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">class Bird extends Animal &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void move() &#123;</span><br><span class="line">        System.out.println(&quot;fly&quot;); // 覆寫父類別Animal.move()的內容</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p><strong>指父類別為子類別的通用型態，再透過子類別可覆寫父類別的方法來達到多型的效果，
+利用父類別提供的方法呼叫，執行子類別自己的行為。</strong></p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">class Animal &#123;</span><br><span class="line">    void move() &#123;</span><br><span class="line">        System.out.println(&quot;move...move...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">class Dog extends Animal &#123;</span><br><span class="line">    void move() &#123;</span><br><span class="line">        System.out.println(&quot;跑...跑...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">class Bird extends Animal &#123;</span><br><span class="line">    void move() &#123;</span><br><span class="line">        System.out.println(&quot;飛...飛...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">class Fish extends Animal &#123;</span><br><span class="line">    void move() &#123;</span><br><span class="line">        System.out.println(&quot;游...游...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 <h4 id="overload">多載(Overload)</h4>
 <p><strong>指在一個類別(class)中，定義多個名稱相同，但參數(Parameter)不同的方法(Method)。</strong></p>
 <p>例如Java String的indexOf(...)即為多載的例子。</p>
@@ -666,7 +653,7 @@ toc.js與scroll監聽事件都改了一遍，還是不起作用....，做到一�
 <div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">public interface HelloWorld &#123;</span><br><span class="line">    void hello(); // 與最下面的 String hello() 衝突</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">    void hello(int i);</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">    void hello(int i, int j) ;</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">    void hello(int i, String s);</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">    void hello(String s) ;</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">    String hello();  // 回傳型態不同並無多載，與最上面的 void hello() 衝突</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 <h4 id="override">覆寫(Override)</h4>
 <p>通常用於繼承子類別，指子類別可以覆寫父類別的方法內容，使該方法擁有不同於父類別的行為。</p>
-
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">public class Main &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        // Animal為Dog及Bird的通用型態</span><br><span class="line">        Animal dog = new Dog();   // 子類別Dog物件分派至Animal型別變數dog</span><br><span class="line">        Animal bird = new Bird(); // 子類別Bird物件分派至Animal型別變數bird</span><br><span class="line">        act(dog);  // run</span><br><span class="line">        act(bird); // fly</span><br><span class="line">    &#125;</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">    private static void act(Animal animal) &#123; // 因為多型，所以參數以通用的父類別傳入</span><br><span class="line">        animal.move(); // 因為多型及覆寫，所以實際執行的方法為子類別的方法內容</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">class Animal &#123;</span><br><span class="line">    public void move() &#123;</span><br><span class="line">        System.out.println(&quot;move&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">class Dog extends Animal &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void move() &#123;</span><br><span class="line">        System.out.println(&quot;run&quot;); // 覆寫父類別Animal.move()的內容</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">class Bird extends Animal &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void move() &#123;</span><br><span class="line">        System.out.println(&quot;fly&quot;); // 覆寫父類別Animal.move()的內容</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 <!-- ------------------------------------------------------------------------------------- -->
 <h3 id="Abstract">抽象(Abstract)</h3>
 <a class="link"   href="https://yubin551.gitbook.io/java-note/object_oriented_programming/abstract" >詳細資料<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
@@ -733,12 +720,62 @@ toc.js與scroll監聽事件都改了一遍，還是不起作用....，做到一�
 <ul>介面的設計規則：
     <li style="margin-left:40px;">當一個類別或抽象類別實作介面時，這些方法的存取修飾符必須至少符合介面的可見性要求，也就是 public</li>
 </ul>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">abstract class v110 : Socket</span><br><span class="line">&#123;</span><br><span class="line">    // 錯誤：介面成員必須是 public</span><br><span class="line">    protected void connect(string str)</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(str + &quot; is 110v&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>]]></content>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">abstract class v110 : Socket</span><br><span class="line">&#123;</span><br><span class="line">    // 錯誤：介面成員必須是 public</span><br><span class="line">    protected void connect(string str)</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(str + &quot; is 110v&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h3 id="Constructor">建構子</h3>
+<a class="link"   href="https://yubin551.gitbook.io/java-note/object_oriented_programming" >詳細資料<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
+<p>在工程師使用 new 關鍵字來創造物件時被呼叫，用來初始化物件的資料欄位。</p>
+<div class="mb-0">
+    <img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://i.imgur.com/SJIiKnx.png"
+                     
+                >
+</div>
+<h5>建構子有幾個特點：</h5>
+<ol>
+    <li>必須與類別名稱同名。</li>
+    <li>不可以有回傳值。</li>
+    <li>可以帶入引數(arguments)。</li>
+    <li>主要功能為初始化物件，搭配new關鍵字被呼叫。</li>
+    <li>可以有多個建構子，但引數型態及個數不可以相同。</li>
+</ol>]]></content>
       <categories>
         <category>整理記錄</category>
       </categories>
       <tags>
         <tag>oop</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SQL語法紀錄</title>
+    <url>/2025/01/15/SQL/SQL/</url>
+    <content><![CDATA[<p>Member</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE DATABASE TestProject</span><br><span class="line">on primary </span><br><span class="line">(NAME=TestProject,FILENAME=&#x27;C:\SQLBackup\練習專案\TestProject.MDF&#x27;,</span><br><span class="line">SIZE=10MB,FILEGROWTH =10MB,MAXSIZE=100MB)</span><br><span class="line">LOG ON(NAME=TestProject_LOG,FILENAME=&#x27;C:\SQLBackup\練習專案\TestProject.LDF&#x27;,</span><br><span class="line">SIZE=10MB,FILEGROWTH =10MB,MAXSIZE=100MB)</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">create table Member</span><br><span class="line">(member_id smallint identity(1,1) primary key,</span><br><span class="line">email varchar(50) not null constraint uq_email unique(email),</span><br><span class="line">[password] varchar(max) not null,</span><br><span class="line">name nvarchar(20) not null,</span><br><span class="line">phone nchar(10),</span><br><span class="line">created_time date default getDate()</span><br><span class="line">)</span><br></pre></td></tr></table></figure></div>
+<p>Message(trigger)</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE TABLE Message</span><br><span class="line">(message_id SMALLINT IDENTITY(1,1) PRIMARY KEY,</span><br><span class="line">message_board_id SMALLINT NOT NULL CONSTRAINT Message_FK_message_board_id</span><br><span class="line">FOREIGN KEY (message_board_id) REFERENCES Message_Board(message_board_id),</span><br><span class="line">reply_member_content NVARCHAR(50),</span><br><span class="line">message_content NVARCHAR(200) NOT NULL,</span><br><span class="line">member_id SMALLINT CONSTRAINT Message_FK_member_id</span><br><span class="line">FOREIGN KEY (member_id) REFERENCES Member(member_id),</span><br><span class="line">reply_member_id SMALLINT CONSTRAINT Message_FK_reply_member_id</span><br><span class="line">FOREIGN KEY (reply_member_id) REFERENCES Member(member_id),</span><br><span class="line">post_time VARCHAR(50) NOT null,</span><br><span class="line">message_basement TINYINT </span><br><span class="line">)</span><br><span class="line">GO</span><br><span class="line">--留言樓層trigger</span><br><span class="line">CREATE TRIGGER SetMessageBasement</span><br><span class="line">ON Message</span><br><span class="line">AFTER INSERT</span><br><span class="line">AS</span><br><span class="line">BEGIN</span><br><span class="line">    DECLARE @message_board_id smallint</span><br><span class="line">    DECLARE @new_basement tinyint</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">    --  INSERTED存放剛插入的記錄=&gt;@message_board_id設置為新增的數字</span><br><span class="line">    SELECT @message_board_id = message_board_id FROM INSERTED</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">    -- 找出個別message_board_id最大的message_basement</span><br><span class="line">    SELECT @new_basement = ISNULL(MAX(message_basement), 0) + 1</span><br><span class="line">    FROM Message</span><br><span class="line">    WHERE message_board_id = @message_board_id</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">    -- 更新message_basement</span><br><span class="line">    UPDATE Message</span><br><span class="line">    SET message_basement = @new_basement</span><br><span class="line">    WHERE message_id IN (SELECT message_id FROM INSERTED)</span><br><span class="line">END	</span><br><span class="line">GO</span><br></pre></td></tr></table></figure></div>]]></content>
+      <categories>
+        <category>整理記錄</category>
+      </categories>
+      <tags>
+        <tag>sql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>心情日誌</title>
+    <url>/2025/01/14/life-lessons/life-lessons/</url>
+    <content><![CDATA[<p>自己平常有用todo-list，紀錄今天要完成哪些事項，也會順便填入明天的。</p>
+<p>但有時就有其他事情比較優先，例如有面試邀約、朋友想邀出來見個面、處理家裡事情等等，就會延宕到明天。</p>
+<p>面試的準備永遠準備不完，每家公司的要求不一樣，只能盡自己全力，失敗時就沒有藉口。</p>
+<p>還有不要對自己有過高的期待，找工作有時靠「緣分」，不盡然是技術問題。</p>
+
+<p>目前的面試經驗也不豐富，我準備一場面試都需要花費不短時間，不像某些人可以臨場反應侃侃而談，很佩服他們。</p>
+<p>然後我自己的理念是「先獲得人生第一個快樂的工作經驗、美好的開始」，比較重要，不要起跑點就跌倒了。</p>
+
+<p>「可以把最喜歡、最有把握的公司面試順序排後面一點。」</p>
+<p>累積面試經驗，先去面試比較沒興趣的公司，面試被刷掉就沒什麼損失，反而可以利用這些面試經驗，去順利拿到真正有興趣的公司 Offer ！</p>]]></content>
+      <tags>
+        <tag>心情</tag>
       </tags>
   </entry>
   <entry>
@@ -836,23 +873,6 @@ toc.js與scroll監聽事件都改了一遍，還是不起作用....，做到一�
       </categories>
       <tags>
         <tag>.Net</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>心情日誌</title>
-    <url>/2025/01/14/life-lessons/life-lessons/</url>
-    <content><![CDATA[<p>自己平常有用todo-list，紀錄今天要完成哪些事項，也會順便填入明天的。</p>
-<p>但有時就有其他事情比較優先，例如有面試邀約、朋友想邀出來見個面、處理家裡事情等等，就會延宕到明天。</p>
-<p>面試的準備永遠準備不完，每家公司的要求不一樣，只能盡自己全力，失敗時就沒有藉口。</p>
-<p>還有不要對自己有過高的期待，找工作有時靠「緣分」，不盡然是技術問題。</p>
-
-<p>目前的面試經驗也不豐富，我準備一場面試都需要花費不短時間，不像某些人可以臨場反應侃侃而談，很佩服他們。</p>
-<p>然後我自己的理念是「先獲得人生第一個快樂的工作經驗、美好的開始」，比較重要，不要起跑點就跌倒了。</p>
-
-<p>「可以把最喜歡、最有把握的公司面試順序排後面一點。」</p>
-<p>累積面試經驗，先去面試比較沒興趣的公司，面試被刷掉就沒什麼損失，反而可以利用這些面試經驗，去順利拿到真正有興趣的公司 Offer ！</p>]]></content>
-      <tags>
-        <tag>心情</tag>
       </tags>
   </entry>
 </search>
