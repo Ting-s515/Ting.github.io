@@ -30,7 +30,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://ting-s515.github.io/images/redefine-og.webp">
 <meta property="article:published_time" content="2025-01-11T10:48:17.000Z">
-<meta property="article:modified_time" content="2025-01-17T16:09:51.999Z">
+<meta property="article:modified_time" content="2025-01-18T17:17:55.974Z">
 <meta property="article:author" content="Ting">
 <meta property="article:tag" content="oop">
 <meta name="twitter:card" content="summary">
@@ -372,8 +372,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-01-18 00:09:51</span>
-            <span class="mobile">2025-01-18 00:09:51</span>
+            <span class="desktop">2025-01-19 01:17:55</span>
+            <span class="mobile">2025-01-19 01:17:55</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -517,21 +517,34 @@
 <!-- ------------------------------------------------------------------------------------- -->
 <h3 id="Interface">介面(Interface)</h3>
 <a class="link"   target="_blank" rel="noopener" href="https://yubin551.gitbook.io/java-note/object_oriented_programming/interface" >詳細資料<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
-<h5>介面，描述不同類別的共通行為。</h5> 
-<p>假設電器設備指的是可以從台灣電力公司取得需要的電源。</p>
-<p>冰箱跟烤箱都可以接受台灣電力公司的電源，這兩個東西都可以視為電器設備，但這兩個東西在繼承關係上可說是相差很遠的。</p>
-<p>所以我們可以說，冰箱跟烤箱擁有相同的『 行為 』，在這裡指的就是接受並運用這個110/220伏特的交流電。</p>
+<h5>介面，描述不同類別的共通行為。只要能夠實作介面方法，就可以實作該介面。</h5> 
+<p>介面裡面定義方法原型，不能有具體實作方法，用來規範實作介面的類別，就必須實做介面方法，確保遵守一致的設計。</p>
 
-<p>例如：</p>
-<p>物件 -> 冷藏設備 -> 冰箱。</p>
-<p>物件 -> 加熱設備 -> 烤箱。</p>
-<p>由於<strong>Java不允許多重繼承</strong>(任何類別只能有一個父類別)，所以沒辦法讓冰箱既是冷藏設備又是電器設備。</p>
-<!-- ------------------------------------------------------------------------------------- -->
-<h5>無法多重繼承：</h5>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">class 冰箱 extends 冷藏設備,電器設備&#123;  // 編譯錯誤，不允許多重繼承</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-<p>從現實中來看，冰箱跟烤箱只有 『 使用台電提供的電 』 這個共通的行為，因此我們把電器設備定義為介面，如此一來冰箱跟烤箱都可以『 實作 』這個介面，從而具有這個介面的特性，台電也很清楚的知道只要送出的電可以讓『 電器設備 』這個介面使用就好，任何需要電的設備只要符合這個介面制訂的規則，就可以獲得電力。</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class 冰箱 extends 冷藏設備 implements 電氣設備&#123; // 繼承冷藏設備，實作電器設備這個介面</span><br><span class="line">    // 成員宣告</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-<p>如此一來，冰箱就可以視為電器設備，當作電器設備來使用。</p>
+<p>假設有"烤箱" 跟"冷氣"，他們共同屬性是"電器設備"，都需要插電才會運作
+於是可以把插座設計成介面，方法就是插電這個行為
+然後抽象類別110v、220v分別實作介面，然後"烤箱" "冷氣"再分別繼承抽象類別，去實作自己的方法內容</p>
+
+<h5>實際例子說明</h5>
+<h6>1. 問題背景</h6>
+<ul>
+    <li>烤箱和冷氣都是「電器設備」，它們有一個共同的特徵：需要插電才能運作。</li>
+    <li>我們可以抽象出這個共同的特徵，並設計成一個介面。</li>
+</ul>
+<h6>2. 設計方案</h6>
+<ul>
+    <li>介面（Interface）：定義「插電」這個行為，保證所有電器設備都需要實作這個功能。</li>
+    <li>抽象類別（Abstract Class）：因為不同的電器使用不同的電壓，我們可以將「110V」和「220V」抽象化，並實作「插電」行為，對電壓類型做區分。</li>
+    <li>具體類別（Concrete Class）：烤箱繼承 110V 抽象類別，冷氣繼承 220V 抽象類別，並在各自的具體類別中實現專屬的功能。</li>
+</ul>
+<h5>程式碼範例</h5>
+<p>定義介面</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 插座介面，定義插電的行為</span><br><span class="line">public interface Socket</span><br><span class="line">&#123;</span><br><span class="line">	void connect(string str);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>抽象類別實作介面</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public abstract class v110 : Socket</span><br><span class="line">&#123;</span><br><span class="line">	public virtual void connect(string str)</span><br><span class="line">	&#123;</span><br><span class="line">		Console.WriteLine(str + &quot;is using 110v&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">public abstract class v220 : Socket</span><br><span class="line">&#123;</span><br><span class="line">	public virtual void connect(string str)</span><br><span class="line">	&#123;</span><br><span class="line">		Console.WriteLine(str + &quot;is using 220v&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>具體類別繼承抽象類別</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">//繼承抽象類別</span><br><span class="line">public class Refrigerator : v110</span><br><span class="line">&#123;</span><br><span class="line">	private string str = &quot;&quot;;</span><br><span class="line">	public void refrigeration(string str)</span><br><span class="line">	&#123;</span><br><span class="line">		connect(str);</span><br><span class="line">		Console.WriteLine(str + &quot;開始冷藏&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">class AirConditioning : v220</span><br><span class="line">&#123;</span><br><span class="line">	public void Operation(string str)</span><br><span class="line">	&#123;</span><br><span class="line">		connect(str);</span><br><span class="line">		System.Console.WriteLine(str + &quot;運作中...&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>主程式執行範例</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">internal class Program</span><br><span class="line">&#123;</span><br><span class="line">    static void Main(string[] args)</span><br><span class="line">    &#123;</span><br><span class="line">        Refrigerator refrigerator = new Refrigerator();</span><br><span class="line">        refrigerator.refrigeration(&quot;冰箱&quot;);</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">        AirConditioning air_conditioning = new AirConditioning();</span><br><span class="line">        air_conditioning.Operation(&quot;冷氣&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 <!-- ------------------------------------------------------------------------------------- -->
 <h4 id="abstract_implements_interface">抽象類別實作介面的特性</h4>
 <ul>1. 抽象類別可以選擇實作介面的方法：
@@ -551,6 +564,19 @@
     <li style="margin-left:40px;">當一個類別或抽象類別實作介面時，這些方法的存取修飾符必須至少符合介面的可見性要求，也就是 public</li>
 </ul>
 <div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">abstract class v110 : Socket</span><br><span class="line">&#123;</span><br><span class="line">    // 錯誤：介面成員必須是 public</span><br><span class="line">    protected void connect(string str)</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(str + &quot; is 110v&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h4 id="difference">1. 介面和抽象類別有何不同？</h4>
+<ul>
+    <li>介面：只能定義方法的原型，不包含具體實作（C# 8.0 之後支援預設實作）。</li>
+    <li>抽象類別：可以定義具體方法，也可以保留抽象方法供子類別實現。</li>
+    <li>多重性：類別可以實作多個介面，但只能繼承一個抽象類別。</li>
+</ul>
+<h4 id="interface_func">2. 介面的用途是什麼？</h4>
+<ul>
+    <li>提供多型（Polymorphism）的基礎。</li>
+    <li>達到鬆耦合設計，方便程式碼擴展與維護。</li>
+    <li>支援依賴反轉原則（Dependency Inversion Principle），在設計模式（如 DI）中非常重要。</li>
+</ul>
+<!-- ------------------------------------------------------------------------------------- -->
 <h3 id="Constructor">建構子</h3>
 <a class="link"   target="_blank" rel="noopener" href="https://yubin551.gitbook.io/java-note/object_oriented_programming" >詳細資料<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
 <p>在工程師使用 new 關鍵字來創造物件時被呼叫，用來初始化物件的資料欄位。</p>
@@ -605,7 +631,7 @@
 			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
 				<a class="next" rel="next" href="/2025/01/10/net/HashPassword/">
 					<span class="title flex justify-center items-center">
-						<span class="post-nav-title-item">整理有關哈希密碼與ILogger相關程式</span>
+						<span class="post-nav-title-item">整理哈希密碼與ILogger相關程式</span>
 						<span class="post-nav-item">Next posts</span>
 					</span>
 					<span class="right arrow-icon flex justify-center items-center">
@@ -670,7 +696,7 @@
 	<div class="post-toc">
 		<div class="toc-title">On this page</div>
 		<div class="page-title">物件導向OOP</div>
-		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#oop"><span class="nav-text">三大特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Encapsulation"><span class="nav-text">封裝(Encapsulation)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#common"><span class="nav-text">常見修飾子</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Inheritance"><span class="nav-text">繼承 (Inheritance)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Polymorphism"><span class="nav-text">多型(Polymorphism)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#overload"><span class="nav-text">多載(Overload)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#override"><span class="nav-text">覆寫(Override)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Abstract"><span class="nav-text">抽象(Abstract)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#abstract_class"><span class="nav-text">抽象類別 abstract class</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#abstract_method"><span class="nav-text">抽象方法 abstract method</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Interface"><span class="nav-text">介面(Interface)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#abstract_implements_interface"><span class="nav-text">抽象類別實作介面的特性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#interface_method"><span class="nav-text">實作介面方法必須為公開(public)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Constructor"><span class="nav-text">建構子</span></a></li></ol></li></ol>
+		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#oop"><span class="nav-text">三大特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Encapsulation"><span class="nav-text">封裝(Encapsulation)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#common"><span class="nav-text">常見修飾子</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Inheritance"><span class="nav-text">繼承 (Inheritance)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Polymorphism"><span class="nav-text">多型(Polymorphism)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#overload"><span class="nav-text">多載(Overload)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#override"><span class="nav-text">覆寫(Override)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Abstract"><span class="nav-text">抽象(Abstract)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#abstract_class"><span class="nav-text">抽象類別 abstract class</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#abstract_method"><span class="nav-text">抽象方法 abstract method</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Interface"><span class="nav-text">介面(Interface)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#abstract_implements_interface"><span class="nav-text">抽象類別實作介面的特性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#interface_method"><span class="nav-text">實作介面方法必須為公開(public)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#difference"><span class="nav-text">1. 介面和抽象類別有何不同？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#interface_func"><span class="nav-text">2. 介面的用途是什麼？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Constructor"><span class="nav-text">建構子</span></a></li></ol></li></ol>
 
 	</div>
 </div>

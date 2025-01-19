@@ -1,6 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Ngrok說明</title>
+    <url>/2025/01/14/Ngrok/</url>
+    <content><![CDATA[<h2 id="ngrok">甚麼是Ngrok</h2>
+<p>主要功能是作為一個<strong>本地代理伺服器</strong>，它能將你本地運行的應用或伺服器暴露到外部網路（如互聯網），即使你的本地設備處於防火牆或 NAT（網絡地址轉換）後面。</p>
+<ul>
+    具體來說，Ngrok 的功能包括：
+    <li>1. 隧道服務（Tunneling Service）</li>
+    <p style="margin-left:30px;">Ngrok 最核心的功能是提供隧道服務，它通過一個公開的 URL，將你本地運行的服務（如 Web 伺服器、API 等）暴露給外部網路。這意味著任何人只要擁有該 URL，就能訪問你本地的服務。</p>
+    <!-- ------------------------------------------------------------------------------------- -->
+    <li>2. HTTPS 支援</li>
+    <p style="margin-left:30px;">Ngrok 自動生成帶有 HTTPS 的 URL，因此即使你的本地服務只支持 HTTP，Ngrok 也會提供一個安全加密的 HTTPS URL，確保數據在傳輸過程中得到保護。</p>
+    <!-- ------------------------------------------------------------------------------------- -->
+    <li>3. 處理 Webhook</li>
+    <p style="margin-left:30px;">當使用第三方服務時，很多會要求你的應用能夠接收來自他們的 Webhook（如支付通知或 GitHub 的事件通知）。如果你的伺服器是本地的且無法直接對外公開，Ngrok 可以生成一個公開的 URL 來接收 Webhook 並將其轉發到你的本地伺服器，這在開發和測試階段非常有用。</p>
+    <!-- ------------------------------------------------------------------------------------- -->
+    <li>4. 本地開發與測試</li>
+    <p style="margin-left:30px;">Ngrok 對於開發者來說是極其方便的工具，因為它可以模擬一個真實的互聯網環境，讓你本地運行的應用能夠接受來自外部的請求，而無需部署到外部伺服器上。</p>
+    <!-- ------------------------------------------------------------------------------------- -->
+    <li>5. 自訂子域名與自訂域名（付費功能）</li>
+    <p style="margin-left:30px;">對於 Ngrok 的付費版本，你可以設定固定的子域名或自訂域名，使得每次啟動 Ngrok 時，URL 都不會變化。這對於長期需要測試或公開訪問的服務特別有用。</p>
+</ul>
+
+<h2 id="proxy">啟動本地伺服器代理</h2>
+<p>使用 Ngrok 來暴露本地的 Flask 伺服器（通常 Flask 預設端口是 5000）：</p>
+<p>執行ngrok.exe，輸入以下指令</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">ngrok http 5000</span><br></pre></td></tr></table></figure></div>
+<h3 id="much_proxy">代理多個Url</h3>
+<p>正常來說，<strong>Ngrok一次只能配置一個url</strong>，但可以透過編輯yml檔來代理多個url</p>
+<p>首先執行ngrok.exe，輸入以下指令，查看yml檔案路徑</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">ngrok config check</span><br></pre></td></tr></table></figure></div>
+<p>你應該會看到如下架構</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">version: &quot;2&quot;</span><br><span class="line">authtoken: 2mTPgdrUufU5dquLVU9X0Dk3ESq_3wNL57wshBaYgTgooEqsg</span><br><span class="line">tunnels:</span><br></pre></td></tr></table></figure></div>
+<p>把這邊修改成</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">version: &quot;2&quot;</span><br><span class="line">authtoken: 2mTPgdrUufU5dquLVU9X0Dk3ESq_3wNL57wshBaYgTgooEqsg</span><br><span class="line">tunnels:</span><br><span class="line">  flask_app:</span><br><span class="line">    proto: http</span><br><span class="line">    addr: 5100</span><br><span class="line">  second_app:</span><br><span class="line">    proto: http</span><br><span class="line">    addr: 5200</span><br></pre></td></tr></table></figure></div>
+<p>就可以達到代理多個url了</p>
+<ul>重點解釋
+    <p class="mb-0 fw-bold">tunnels底下的結構</p>
+    <li >每個 tunnel（如 flask_app、second_app 等）是一個獨立的服務代理。</li>
+    <li>每個代理都需要指定 proto（協議）和 addr（本地的應用埠號）。</li>
+    <p class="mt-3 mb-0 fw-bold">啟用特定的代理</p>
+    <li>啟用指定的代理：</li>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">ngrok start flask_app</span><br><span class="line">ngrok start second_app</span><br></pre></td></tr></table></figure></div>
+    <li>一次啟動多個代理：</li>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">ngrok start flask_app second_app</span><br><span class="line">ngrok start --all</span><br></pre></td></tr></table></figure></div>
+</ul>
+<p style="color:gray;">我要當個免費仔xd</p>]]></content>
+      <categories>
+        <category>整理記錄</category>
+      </categories>
+      <tags>
+        <tag>Ngrok</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo環境建置、指令紀錄</title>
     <url>/2025/01/08/HexoDescription/</url>
     <content><![CDATA[<style>
@@ -537,60 +591,6 @@ toc.js與scroll監聽事件都改了一遍，還是不起作用....，做到一�
       </tags>
   </entry>
   <entry>
-    <title>Ngrok說明</title>
-    <url>/2025/01/14/Ngrok/</url>
-    <content><![CDATA[<h2 id="ngrok">甚麼是Ngrok</h2>
-<p>主要功能是作為一個<strong>本地代理伺服器</strong>，它能將你本地運行的應用或伺服器暴露到外部網路（如互聯網），即使你的本地設備處於防火牆或 NAT（網絡地址轉換）後面。</p>
-<ul>
-    具體來說，Ngrok 的功能包括：
-    <li>1. 隧道服務（Tunneling Service）</li>
-    <p style="margin-left:30px;">Ngrok 最核心的功能是提供隧道服務，它通過一個公開的 URL，將你本地運行的服務（如 Web 伺服器、API 等）暴露給外部網路。這意味著任何人只要擁有該 URL，就能訪問你本地的服務。</p>
-    <!-- ------------------------------------------------------------------------------------- -->
-    <li>2. HTTPS 支援</li>
-    <p style="margin-left:30px;">Ngrok 自動生成帶有 HTTPS 的 URL，因此即使你的本地服務只支持 HTTP，Ngrok 也會提供一個安全加密的 HTTPS URL，確保數據在傳輸過程中得到保護。</p>
-    <!-- ------------------------------------------------------------------------------------- -->
-    <li>3. 處理 Webhook</li>
-    <p style="margin-left:30px;">當使用第三方服務時，很多會要求你的應用能夠接收來自他們的 Webhook（如支付通知或 GitHub 的事件通知）。如果你的伺服器是本地的且無法直接對外公開，Ngrok 可以生成一個公開的 URL 來接收 Webhook 並將其轉發到你的本地伺服器，這在開發和測試階段非常有用。</p>
-    <!-- ------------------------------------------------------------------------------------- -->
-    <li>4. 本地開發與測試</li>
-    <p style="margin-left:30px;">Ngrok 對於開發者來說是極其方便的工具，因為它可以模擬一個真實的互聯網環境，讓你本地運行的應用能夠接受來自外部的請求，而無需部署到外部伺服器上。</p>
-    <!-- ------------------------------------------------------------------------------------- -->
-    <li>5. 自訂子域名與自訂域名（付費功能）</li>
-    <p style="margin-left:30px;">對於 Ngrok 的付費版本，你可以設定固定的子域名或自訂域名，使得每次啟動 Ngrok 時，URL 都不會變化。這對於長期需要測試或公開訪問的服務特別有用。</p>
-</ul>
-
-<h2 id="proxy">啟動本地伺服器代理</h2>
-<p>使用 Ngrok 來暴露本地的 Flask 伺服器（通常 Flask 預設端口是 5000）：</p>
-<p>執行ngrok.exe，輸入以下指令</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">ngrok http 5000</span><br></pre></td></tr></table></figure></div>
-<h3 id="much_proxy">代理多個Url</h3>
-<p>正常來說，<strong>Ngrok一次只能配置一個url</strong>，但可以透過編輯yml檔來代理多個url</p>
-<p>首先執行ngrok.exe，輸入以下指令，查看yml檔案路徑</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">ngrok config check</span><br></pre></td></tr></table></figure></div>
-<p>你應該會看到如下架構</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">version: &quot;2&quot;</span><br><span class="line">authtoken: 2mTPgdrUufU5dquLVU9X0Dk3ESq_3wNL57wshBaYgTgooEqsg</span><br><span class="line">tunnels:</span><br></pre></td></tr></table></figure></div>
-<p>把這邊修改成</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">version: &quot;2&quot;</span><br><span class="line">authtoken: 2mTPgdrUufU5dquLVU9X0Dk3ESq_3wNL57wshBaYgTgooEqsg</span><br><span class="line">tunnels:</span><br><span class="line">  flask_app:</span><br><span class="line">    proto: http</span><br><span class="line">    addr: 5100</span><br><span class="line">  second_app:</span><br><span class="line">    proto: http</span><br><span class="line">    addr: 5200</span><br></pre></td></tr></table></figure></div>
-<p>就可以達到代理多個url了</p>
-<ul>重點解釋
-    <p class="mb-0 fw-bold">tunnels底下的結構</p>
-    <li >每個 tunnel（如 flask_app、second_app 等）是一個獨立的服務代理。</li>
-    <li>每個代理都需要指定 proto（協議）和 addr（本地的應用埠號）。</li>
-    <p class="mt-3 mb-0 fw-bold">啟用特定的代理</p>
-    <li>啟用指定的代理：</li>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">ngrok start flask_app</span><br><span class="line">ngrok start second_app</span><br></pre></td></tr></table></figure></div>
-    <li>一次啟動多個代理：</li>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">ngrok start flask_app second_app</span><br><span class="line">ngrok start --all</span><br></pre></td></tr></table></figure></div>
-</ul>
-<p style="color:gray;">我要當個免費仔xd</p>]]></content>
-      <categories>
-        <category>整理記錄</category>
-      </categories>
-      <tags>
-        <tag>Ngrok</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>心情日誌</title>
     <url>/2025/01/14/life-lessons/life-lessons/</url>
     <content><![CDATA[<p>自己平常有用todo-list，紀錄今天要完成哪些事項，也會順便填入明天的。</p>
@@ -605,48 +605,6 @@ toc.js與scroll監聽事件都改了一遍，還是不起作用....，做到一�
 <p>累積面試經驗，先去面試比較沒興趣的公司，面試被刷掉就沒什麼損失，反而可以利用這些面試經驗，去順利拿到真正有興趣的公司 Offer ！</p>]]></content>
       <tags>
         <tag>心情</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>整理有關哈希密碼與ILogger相關程式</title>
-    <url>/2025/01/10/net/HashPassword/</url>
-    <content><![CDATA[<h2 id="create_obj">先建立PasswordHasher物件</h2>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">private readonly PasswordHasher&lt;memberTable&gt; _passwordHasher;</span><br><span class="line">private readonly ILogger&lt;RegisterAndLoginController&gt; _logger;</span><br><span class="line">//注入控制器</span><br><span class="line">public RegisterAndLoginController(CitybreakContext context, ILogger&lt;當前的Controller&gt; logger)</span><br><span class="line">&#123;</span><br><span class="line">	_context = context;</span><br><span class="line">	_passwordHasher = new PasswordHasher&lt;memberTable&gt;();</span><br><span class="line">	_logger = logger;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-<h2 id="register">註冊</h2>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">memberData.password = _passwordHasher.HashPassword(memberTable user, string password);</span><br></pre></td></tr></table></figure></div>
-<ul>
-    <li>memberData.password: 自訂資料表物件.欄位</li>
-    <li>_passwordHasher: 物件</li>
-    <li>.HashPassword: 方法名稱，負責加密</li>
-    <li>第一個參數: 傳入資料表物件，比如根據用戶的某些屬性進一步自定義加密邏輯。在這邊可以使用null
-    ，表示直接對傳入的密碼進行加密</li>
-    <li>第二個參數: 需要加密的字串</li>
-</ul>
-
-<h2 id="login">登入</h2>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">//比對密碼</span><br><span class="line">PasswordVerificationResult result = _passwordHasher.VerifyHashedPassword</span><br><span class="line">        (member, member.password, value.password);</span><br><span class="line">//接受三個參數：用戶實體、存儲的哈希密碼和用戶輸入的密碼</span><br><span class="line">if (result == PasswordVerificationResult.Success)</span><br></pre></td></tr></table></figure></div>
-<h4>PasswordVerificationResult</h4>
-<ul>這是 Microsoft.AspNetCore.Identity 提供的一個型別，表示密碼驗證的結果
-    <li>Success：驗證成功，密碼正確。</li>
-    <li>Failed：驗證失敗，密碼不正確。</li>
-    <li>SuccessRehashNeeded：密碼驗證成功，但需要重新哈希密碼（例如，哈希算法升級或安全策略改變）。</li>
-</ul>
-
-<h4>VerifyHashedPassword</h4>
-<ul>主要是比對已儲存的哈希密碼與用戶輸入的原始密碼。
-    <li>memberTable user: 用戶物件</li>
-    <li>hashedPassword: 資料庫中儲存的經過哈希的密碼。</li>
-    <li>providedPassword: 用戶輸入的密碼</li>
-</ul>
-
-]]></content>
-      <categories>
-        <category>整理記錄</category>
-      </categories>
-      <tags>
-        <tag>hash</tag>
-        <tag>.Net</tag>
-        <tag>ILogger</tag>
       </tags>
   </entry>
   <entry>
@@ -746,21 +704,34 @@ toc.js與scroll監聽事件都改了一遍，還是不起作用....，做到一�
 <!-- ------------------------------------------------------------------------------------- -->
 <h3 id="Interface">介面(Interface)</h3>
 <a class="link"   href="https://yubin551.gitbook.io/java-note/object_oriented_programming/interface" >詳細資料<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
-<h5>介面，描述不同類別的共通行為。</h5> 
-<p>假設電器設備指的是可以從台灣電力公司取得需要的電源。</p>
-<p>冰箱跟烤箱都可以接受台灣電力公司的電源，這兩個東西都可以視為電器設備，但這兩個東西在繼承關係上可說是相差很遠的。</p>
-<p>所以我們可以說，冰箱跟烤箱擁有相同的『 行為 』，在這裡指的就是接受並運用這個110/220伏特的交流電。</p>
+<h5>介面，描述不同類別的共通行為。只要能夠實作介面方法，就可以實作該介面。</h5> 
+<p>介面裡面定義方法原型，不能有具體實作方法，用來規範實作介面的類別，就必須實做介面方法，確保遵守一致的設計。</p>
 
-<p>例如：</p>
-<p>物件 -> 冷藏設備 -> 冰箱。</p>
-<p>物件 -> 加熱設備 -> 烤箱。</p>
-<p>由於<strong>Java不允許多重繼承</strong>(任何類別只能有一個父類別)，所以沒辦法讓冰箱既是冷藏設備又是電器設備。</p>
-<!-- ------------------------------------------------------------------------------------- -->
-<h5>無法多重繼承：</h5>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">class 冰箱 extends 冷藏設備,電器設備&#123;  // 編譯錯誤，不允許多重繼承</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-<p>從現實中來看，冰箱跟烤箱只有 『 使用台電提供的電 』 這個共通的行為，因此我們把電器設備定義為介面，如此一來冰箱跟烤箱都可以『 實作 』這個介面，從而具有這個介面的特性，台電也很清楚的知道只要送出的電可以讓『 電器設備 』這個介面使用就好，任何需要電的設備只要符合這個介面制訂的規則，就可以獲得電力。</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">class 冰箱 extends 冷藏設備 implements 電氣設備&#123; // 繼承冷藏設備，實作電器設備這個介面</span><br><span class="line">    // 成員宣告</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-<p>如此一來，冰箱就可以視為電器設備，當作電器設備來使用。</p>
+<p>假設有"烤箱" 跟"冷氣"，他們共同屬性是"電器設備"，都需要插電才會運作
+於是可以把插座設計成介面，方法就是插電這個行為
+然後抽象類別110v、220v分別實作介面，然後"烤箱" "冷氣"再分別繼承抽象類別，去實作自己的方法內容</p>
+
+<h5>實際例子說明</h5>
+<h6>1. 問題背景</h6>
+<ul>
+    <li>烤箱和冷氣都是「電器設備」，它們有一個共同的特徵：需要插電才能運作。</li>
+    <li>我們可以抽象出這個共同的特徵，並設計成一個介面。</li>
+</ul>
+<h6>2. 設計方案</h6>
+<ul>
+    <li>介面（Interface）：定義「插電」這個行為，保證所有電器設備都需要實作這個功能。</li>
+    <li>抽象類別（Abstract Class）：因為不同的電器使用不同的電壓，我們可以將「110V」和「220V」抽象化，並實作「插電」行為，對電壓類型做區分。</li>
+    <li>具體類別（Concrete Class）：烤箱繼承 110V 抽象類別，冷氣繼承 220V 抽象類別，並在各自的具體類別中實現專屬的功能。</li>
+</ul>
+<h5>程式碼範例</h5>
+<p>定義介面</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 插座介面，定義插電的行為</span><br><span class="line">public interface Socket</span><br><span class="line">&#123;</span><br><span class="line">	void connect(string str);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>抽象類別實作介面</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">public abstract class v110 : Socket</span><br><span class="line">&#123;</span><br><span class="line">	public virtual void connect(string str)</span><br><span class="line">	&#123;</span><br><span class="line">		Console.WriteLine(str + &quot;is using 110v&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">public abstract class v220 : Socket</span><br><span class="line">&#123;</span><br><span class="line">	public virtual void connect(string str)</span><br><span class="line">	&#123;</span><br><span class="line">		Console.WriteLine(str + &quot;is using 220v&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>具體類別繼承抽象類別</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">//繼承抽象類別</span><br><span class="line">public class Refrigerator : v110</span><br><span class="line">&#123;</span><br><span class="line">	private string str = &quot;&quot;;</span><br><span class="line">	public void refrigeration(string str)</span><br><span class="line">	&#123;</span><br><span class="line">		connect(str);</span><br><span class="line">		Console.WriteLine(str + &quot;開始冷藏&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">class AirConditioning : v220</span><br><span class="line">&#123;</span><br><span class="line">	public void Operation(string str)</span><br><span class="line">	&#123;</span><br><span class="line">		connect(str);</span><br><span class="line">		System.Console.WriteLine(str + &quot;運作中...&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>主程式執行範例</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">internal class Program</span><br><span class="line">&#123;</span><br><span class="line">    static void Main(string[] args)</span><br><span class="line">    &#123;</span><br><span class="line">        Refrigerator refrigerator = new Refrigerator();</span><br><span class="line">        refrigerator.refrigeration(&quot;冰箱&quot;);</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">        AirConditioning air_conditioning = new AirConditioning();</span><br><span class="line">        air_conditioning.Operation(&quot;冷氣&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 <!-- ------------------------------------------------------------------------------------- -->
 <h4 id="abstract_implements_interface">抽象類別實作介面的特性</h4>
 <ul>1. 抽象類別可以選擇實作介面的方法：
@@ -780,6 +751,19 @@ toc.js與scroll監聽事件都改了一遍，還是不起作用....，做到一�
     <li style="margin-left:40px;">當一個類別或抽象類別實作介面時，這些方法的存取修飾符必須至少符合介面的可見性要求，也就是 public</li>
 </ul>
 <div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">abstract class v110 : Socket</span><br><span class="line">&#123;</span><br><span class="line">    // 錯誤：介面成員必須是 public</span><br><span class="line">    protected void connect(string str)</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(str + &quot; is 110v&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h4 id="difference">1. 介面和抽象類別有何不同？</h4>
+<ul>
+    <li>介面：只能定義方法的原型，不包含具體實作（C# 8.0 之後支援預設實作）。</li>
+    <li>抽象類別：可以定義具體方法，也可以保留抽象方法供子類別實現。</li>
+    <li>多重性：類別可以實作多個介面，但只能繼承一個抽象類別。</li>
+</ul>
+<h4 id="interface_func">2. 介面的用途是什麼？</h4>
+<ul>
+    <li>提供多型（Polymorphism）的基礎。</li>
+    <li>達到鬆耦合設計，方便程式碼擴展與維護。</li>
+    <li>支援依賴反轉原則（Dependency Inversion Principle），在設計模式（如 DI）中非常重要。</li>
+</ul>
+<!-- ------------------------------------------------------------------------------------- -->
 <h3 id="Constructor">建構子</h3>
 <a class="link"   href="https://yubin551.gitbook.io/java-note/object_oriented_programming" >詳細資料<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>
 <p>在工程師使用 new 關鍵字來創造物件時被呼叫，用來初始化物件的資料欄位。</p>
@@ -804,6 +788,62 @@ toc.js與scroll監聽事件都改了一遍，還是不起作用....，做到一�
       </categories>
       <tags>
         <tag>oop</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SQL語法紀錄</title>
+    <url>/2025/01/15/SQL/SQL/</url>
+    <content><![CDATA[<p>Member</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE DATABASE TestProject</span><br><span class="line">on primary </span><br><span class="line">(NAME=TestProject,FILENAME=&#x27;C:\SQLBackup\練習專案\TestProject.MDF&#x27;,</span><br><span class="line">SIZE=10MB,FILEGROWTH =10MB,MAXSIZE=100MB)</span><br><span class="line">LOG ON(NAME=TestProject_LOG,FILENAME=&#x27;C:\SQLBackup\練習專案\TestProject.LDF&#x27;,</span><br><span class="line">SIZE=10MB,FILEGROWTH =10MB,MAXSIZE=100MB)</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">create table Member</span><br><span class="line">(member_id smallint identity(1,1) primary key,</span><br><span class="line">email varchar(50) not null constraint uq_email unique(email),</span><br><span class="line">[password] varchar(max) not null,</span><br><span class="line">name nvarchar(20) not null,</span><br><span class="line">phone nchar(10),</span><br><span class="line">created_time date default getDate()</span><br><span class="line">)</span><br></pre></td></tr></table></figure></div>
+<p>Message(trigger)</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE TABLE Message</span><br><span class="line">(message_id SMALLINT IDENTITY(1,1) PRIMARY KEY,</span><br><span class="line">message_board_id SMALLINT NOT NULL CONSTRAINT Message_FK_message_board_id</span><br><span class="line">FOREIGN KEY (message_board_id) REFERENCES Message_Board(message_board_id),</span><br><span class="line">reply_member_content NVARCHAR(50),</span><br><span class="line">message_content NVARCHAR(200) NOT NULL,</span><br><span class="line">member_id SMALLINT CONSTRAINT Message_FK_member_id</span><br><span class="line">FOREIGN KEY (member_id) REFERENCES Member(member_id),</span><br><span class="line">reply_member_id SMALLINT CONSTRAINT Message_FK_reply_member_id</span><br><span class="line">FOREIGN KEY (reply_member_id) REFERENCES Member(member_id),</span><br><span class="line">post_time VARCHAR(50) NOT null,</span><br><span class="line">message_basement TINYINT </span><br><span class="line">)</span><br><span class="line">GO</span><br><span class="line">--留言樓層trigger</span><br><span class="line">CREATE TRIGGER SetMessageBasement</span><br><span class="line">ON Message</span><br><span class="line">AFTER INSERT</span><br><span class="line">AS</span><br><span class="line">BEGIN</span><br><span class="line">    DECLARE @message_board_id smallint</span><br><span class="line">    DECLARE @new_basement tinyint</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">    --  INSERTED存放剛插入的記錄=&gt;@message_board_id設置為新增的數字</span><br><span class="line">    SELECT @message_board_id = message_board_id FROM INSERTED</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">    -- 找出個別message_board_id最大的message_basement</span><br><span class="line">    SELECT @new_basement = ISNULL(MAX(message_basement), 0) + 1</span><br><span class="line">    FROM Message</span><br><span class="line">    WHERE message_board_id = @message_board_id</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">    -- 更新message_basement</span><br><span class="line">    UPDATE Message</span><br><span class="line">    SET message_basement = @new_basement</span><br><span class="line">    WHERE message_id IN (SELECT message_id FROM INSERTED)</span><br><span class="line">END	</span><br><span class="line">GO</span><br></pre></td></tr></table></figure></div>]]></content>
+      <categories>
+        <category>整理記錄</category>
+      </categories>
+      <tags>
+        <tag>sql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>整理哈希密碼與ILogger相關程式</title>
+    <url>/2025/01/10/net/HashPassword/</url>
+    <content><![CDATA[<h2 id="create_obj">先建立PasswordHasher物件</h2>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">private readonly 資料庫名稱 _context;</span><br><span class="line">private readonly PasswordHasher&lt;memberTable&gt; _passwordHasher;</span><br><span class="line">private readonly ILogger&lt;當前的Controller&gt; _logger;</span><br><span class="line">//注入控制器</span><br><span class="line">public 當前的Controller(資料庫名稱 context, ILogger&lt;當前的Controller&gt; logger,PasswordHasher&lt;memberTable&gt; passwordHasher)</span><br><span class="line">&#123;</span><br><span class="line">	_context = context;</span><br><span class="line">	_passwordHasher = PasswordHasher;</span><br><span class="line">	_logger = logger;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h2 id="register">註冊</h2>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">memberData.password = _passwordHasher.HashPassword(memberTable user, string password);</span><br></pre></td></tr></table></figure></div>
+<ul>
+    <li>memberData.password: 自訂資料表物件.欄位</li>
+    <li>_passwordHasher: 物件</li>
+    <li>.HashPassword: 方法名稱，負責加密</li>
+    <li>第一個參數: 傳入資料表物件，比如根據用戶的某些屬性進一步自定義加密邏輯。在這邊可以使用null
+    ，表示直接對傳入的密碼進行加密</li>
+    <li>第二個參數: 需要加密的字串</li>
+</ul>
+
+<h2 id="login">登入</h2>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">//比對密碼</span><br><span class="line">PasswordVerificationResult result = _passwordHasher.VerifyHashedPassword</span><br><span class="line">        (member, member.password, value.password);</span><br><span class="line">//接受三個參數：用戶實體、存儲的哈希密碼和用戶輸入的密碼</span><br><span class="line">if (result == PasswordVerificationResult.Success)</span><br><span class="line">&#123;</span><br><span class="line">    return Ok(new</span><br><span class="line">    &#123;</span><br><span class="line">        success = true,</span><br><span class="line">        Message = &quot;登入成功&quot;,</span><br><span class="line">        member.userID,</span><br><span class="line">        member.name,</span><br><span class="line">        member.email,</span><br><span class="line">        member.phone,</span><br><span class="line">        member.createdDate,</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">    return Unauthorized(new</span><br><span class="line">    &#123;</span><br><span class="line">        success = false,</span><br><span class="line">        message = &quot;登入失敗：信箱或密碼錯誤&quot;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h4>PasswordVerificationResult</h4>
+<ul>這是 Microsoft.AspNetCore.Identity 提供的一個型別，表示密碼驗證的結果
+    <li>Success：驗證成功，密碼正確。</li>
+    <li>Failed：驗證失敗，密碼不正確。</li>
+    <li>SuccessRehashNeeded：密碼驗證成功，但需要重新哈希密碼（例如，哈希算法升級或安全策略改變）。</li>
+</ul>
+
+<h4>VerifyHashedPassword</h4>
+<ul>主要是比對已儲存的哈希密碼與用戶輸入的原始密碼。
+    <li>memberTable user: 用戶物件</li>
+    <li>hashedPassword: 資料庫中儲存的經過哈希的密碼。</li>
+    <li>providedPassword: 用戶輸入的密碼</li>
+</ul>
+
+]]></content>
+      <categories>
+        <category>整理記錄</category>
+      </categories>
+      <tags>
+        <tag>hash</tag>
+        <tag>.Net</tag>
+        <tag>ILogger</tag>
       </tags>
   </entry>
   <entry>
@@ -859,20 +899,6 @@ toc.js與scroll監聽事件都改了一遍，還是不起作用....，做到一�
       </categories>
       <tags>
         <tag>.Net</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SQL語法紀錄</title>
-    <url>/2025/01/15/SQL/SQL/</url>
-    <content><![CDATA[<p>Member</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE DATABASE TestProject</span><br><span class="line">on primary </span><br><span class="line">(NAME=TestProject,FILENAME=&#x27;C:\SQLBackup\練習專案\TestProject.MDF&#x27;,</span><br><span class="line">SIZE=10MB,FILEGROWTH =10MB,MAXSIZE=100MB)</span><br><span class="line">LOG ON(NAME=TestProject_LOG,FILENAME=&#x27;C:\SQLBackup\練習專案\TestProject.LDF&#x27;,</span><br><span class="line">SIZE=10MB,FILEGROWTH =10MB,MAXSIZE=100MB)</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">create table Member</span><br><span class="line">(member_id smallint identity(1,1) primary key,</span><br><span class="line">email varchar(50) not null constraint uq_email unique(email),</span><br><span class="line">[password] varchar(max) not null,</span><br><span class="line">name nvarchar(20) not null,</span><br><span class="line">phone nchar(10),</span><br><span class="line">created_time date default getDate()</span><br><span class="line">)</span><br></pre></td></tr></table></figure></div>
-<p>Message(trigger)</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE TABLE Message</span><br><span class="line">(message_id SMALLINT IDENTITY(1,1) PRIMARY KEY,</span><br><span class="line">message_board_id SMALLINT NOT NULL CONSTRAINT Message_FK_message_board_id</span><br><span class="line">FOREIGN KEY (message_board_id) REFERENCES Message_Board(message_board_id),</span><br><span class="line">reply_member_content NVARCHAR(50),</span><br><span class="line">message_content NVARCHAR(200) NOT NULL,</span><br><span class="line">member_id SMALLINT CONSTRAINT Message_FK_member_id</span><br><span class="line">FOREIGN KEY (member_id) REFERENCES Member(member_id),</span><br><span class="line">reply_member_id SMALLINT CONSTRAINT Message_FK_reply_member_id</span><br><span class="line">FOREIGN KEY (reply_member_id) REFERENCES Member(member_id),</span><br><span class="line">post_time VARCHAR(50) NOT null,</span><br><span class="line">message_basement TINYINT </span><br><span class="line">)</span><br><span class="line">GO</span><br><span class="line">--留言樓層trigger</span><br><span class="line">CREATE TRIGGER SetMessageBasement</span><br><span class="line">ON Message</span><br><span class="line">AFTER INSERT</span><br><span class="line">AS</span><br><span class="line">BEGIN</span><br><span class="line">    DECLARE @message_board_id smallint</span><br><span class="line">    DECLARE @new_basement tinyint</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">    --  INSERTED存放剛插入的記錄=&gt;@message_board_id設置為新增的數字</span><br><span class="line">    SELECT @message_board_id = message_board_id FROM INSERTED</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">    -- 找出個別message_board_id最大的message_basement</span><br><span class="line">    SELECT @new_basement = ISNULL(MAX(message_basement), 0) + 1</span><br><span class="line">    FROM Message</span><br><span class="line">    WHERE message_board_id = @message_board_id</span><br><span class="line">&lt;!-- ------------------------------------------------------------------------------------- --&gt;</span><br><span class="line">    -- 更新message_basement</span><br><span class="line">    UPDATE Message</span><br><span class="line">    SET message_basement = @new_basement</span><br><span class="line">    WHERE message_id IN (SELECT message_id FROM INSERTED)</span><br><span class="line">END	</span><br><span class="line">GO</span><br></pre></td></tr></table></figure></div>]]></content>
-      <categories>
-        <category>整理記錄</category>
-      </categories>
-      <tags>
-        <tag>sql</tag>
       </tags>
   </entry>
 </search>

@@ -23,14 +23,14 @@
         
         <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="整理有關哈希密碼與ILogger相關程式">
+<meta property="og:title" content="整理哈希密碼與ILogger相關程式">
 <meta property="og:url" content="https://ting-s515.github.io/2025/01/10/net/HashPassword/index.html">
 <meta property="og:site_name" content="Ting&#39;s Blog">
 <meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://ting-s515.github.io/images/redefine-og.webp">
 <meta property="article:published_time" content="2025-01-10T12:17:52.000Z">
-<meta property="article:modified_time" content="2025-01-13T04:56:57.642Z">
+<meta property="article:modified_time" content="2025-01-19T05:54:42.421Z">
 <meta property="article:author" content="Ting">
 <meta property="article:tag" content="hash">
 <meta property="article:tag" content=".Net">
@@ -48,7 +48,7 @@
     
     <title>
         
-            整理有關哈希密碼與ILogger相關程式 | Ting&#39;s blog
+            整理哈希密碼與ILogger相關程式 | Ting&#39;s blog
         
     </title>
 
@@ -348,7 +348,7 @@
 		<div class="article-title relative w-full">
 			
 			<div class="w-full flex items-center pt-6 justify-start">
-				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">整理有關哈希密碼與ILogger相關程式</h1>
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">整理哈希密碼與ILogger相關程式</h1>
 			</div>
 			
 		</div>
@@ -374,8 +374,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-01-13 12:56:57</span>
-            <span class="mobile">2025-01-13 12:56:57</span>
+            <span class="desktop">2025-01-19 13:54:42</span>
+            <span class="mobile">2025-01-19 13:54:42</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -434,7 +434,7 @@
 
 		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
 			<h2 id="create_obj">先建立PasswordHasher物件</h2>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">private readonly PasswordHasher&lt;memberTable&gt; _passwordHasher;</span><br><span class="line">private readonly ILogger&lt;RegisterAndLoginController&gt; _logger;</span><br><span class="line">//注入控制器</span><br><span class="line">public RegisterAndLoginController(CitybreakContext context, ILogger&lt;當前的Controller&gt; logger)</span><br><span class="line">&#123;</span><br><span class="line">	_context = context;</span><br><span class="line">	_passwordHasher = new PasswordHasher&lt;memberTable&gt;();</span><br><span class="line">	_logger = logger;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">private readonly 資料庫名稱 _context;</span><br><span class="line">private readonly PasswordHasher&lt;memberTable&gt; _passwordHasher;</span><br><span class="line">private readonly ILogger&lt;當前的Controller&gt; _logger;</span><br><span class="line">//注入控制器</span><br><span class="line">public 當前的Controller(資料庫名稱 context, ILogger&lt;當前的Controller&gt; logger,PasswordHasher&lt;memberTable&gt; passwordHasher)</span><br><span class="line">&#123;</span><br><span class="line">	_context = context;</span><br><span class="line">	_passwordHasher = PasswordHasher;</span><br><span class="line">	_logger = logger;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 <h2 id="register">註冊</h2>
 <div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">memberData.password = _passwordHasher.HashPassword(memberTable user, string password);</span><br></pre></td></tr></table></figure></div>
 <ul>
@@ -447,7 +447,7 @@
 </ul>
 
 <h2 id="login">登入</h2>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//比對密碼</span><br><span class="line">PasswordVerificationResult result = _passwordHasher.VerifyHashedPassword</span><br><span class="line">        (member, member.password, value.password);</span><br><span class="line">//接受三個參數：用戶實體、存儲的哈希密碼和用戶輸入的密碼</span><br><span class="line">if (result == PasswordVerificationResult.Success)</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">//比對密碼</span><br><span class="line">PasswordVerificationResult result = _passwordHasher.VerifyHashedPassword</span><br><span class="line">        (member, member.password, value.password);</span><br><span class="line">//接受三個參數：用戶實體、存儲的哈希密碼和用戶輸入的密碼</span><br><span class="line">if (result == PasswordVerificationResult.Success)</span><br><span class="line">&#123;</span><br><span class="line">    return Ok(new</span><br><span class="line">    &#123;</span><br><span class="line">        success = true,</span><br><span class="line">        Message = &quot;登入成功&quot;,</span><br><span class="line">        member.userID,</span><br><span class="line">        member.name,</span><br><span class="line">        member.email,</span><br><span class="line">        member.phone,</span><br><span class="line">        member.createdDate,</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">    return Unauthorized(new</span><br><span class="line">    &#123;</span><br><span class="line">        success = false,</span><br><span class="line">        message = &quot;登入失敗：信箱或密碼錯誤&quot;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 <h4>PasswordVerificationResult</h4>
 <ul>這是 Microsoft.AspNetCore.Identity 提供的一個型別，表示密碼驗證的結果
     <li>Success：驗證成功，密碼正確。</li>
@@ -570,7 +570,7 @@
 		<div class="post-toc-wrap">
 	<div class="post-toc">
 		<div class="toc-title">On this page</div>
-		<div class="page-title">整理有關哈希密碼與ILogger相關程式</div>
+		<div class="page-title">整理哈希密碼與ILogger相關程式</div>
 		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#create_obj"><span class="nav-text">先建立PasswordHasher物件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#register"><span class="nav-text">註冊</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#login"><span class="nav-text">登入</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-text">PasswordVerificationResult</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-text">VerifyHashedPassword</span></a></li></ol></li></ol></li></ol>
 
 	</div>
